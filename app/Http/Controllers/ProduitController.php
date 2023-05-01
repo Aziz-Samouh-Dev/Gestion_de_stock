@@ -30,13 +30,27 @@ class ProduitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     //
+    //     $input = $request->all();
+    //     Produit::create($input);
+    //     return redirect('produits')->with('flash_message', 'produit Ajouté !');
+    // }
     public function store(Request $request)
     {
-        //
-        $input = $request->all();
+        $input = $request->except('_token');
+
+        // Generate a random auto-incremented ref_p value
+        $randomNumber = mt_rand(1, 999999); // Generate a random 3-digit number
+        $input['ref_p'] = 'Prod-'  . str_pad($randomNumber + 1, 3, '0', STR_PAD_LEFT);
+
+
         Produit::create($input);
-        return redirect('produits')->with('flash_message', 'produit Ajouté !');
+
+        return redirect('produits')->with('flash_message', 'Produit ajouté !');
     }
+
 
     /**
      * Display the specified resource.

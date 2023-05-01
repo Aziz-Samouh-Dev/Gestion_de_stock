@@ -6,21 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('produits', function (Blueprint $table) {
-            $table->increments("id_produit");
-            $table->string("nom_p");
-            $table->integer("ref_p");
-            $table->string("libelle_p");
-            $table->integer("qte_p");
-            $table->date("date_enter");
-            $table->string("qte_alert")->nullable()->default('disponible');
+            $table->increments('id_produit');
+            $table->string('nom_p');
+            $table->string('ref_p')->unique();
+            $table->string('libelle_p');
+            $table->integer('qte_p');
+            $table->date('date_enter');
+            $table->string('qte_alert')->nullable()->default('disponible');
             $table->timestamps();
+
         });
+
     }
 
     /**

@@ -70,6 +70,7 @@
                             </tr>
                         </thead>
                         <tbody id="Content">
+                   
 
                             @foreach ($produits as $item)
                                 <tr class="bg-white border-b">
