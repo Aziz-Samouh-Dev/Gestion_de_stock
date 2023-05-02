@@ -7,7 +7,9 @@
                         <div class=" px-4 ">
                             <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Ajouter Produit</h1>
                         </div>
-                        <form action="{{ url('services') }}" method="post"> @csrf <div class="-mx-3 flex flex-wrap">
+                        <form action="{{ url('services') }}" method="post"> 
+                            @csrf 
+                            <div class="-mx-3 flex flex-wrap">
                                 <div class="w-full px-3 ">
                                     <div class="mb-5">
                                         <label for="nom_service"

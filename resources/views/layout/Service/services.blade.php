@@ -73,9 +73,9 @@
                                 </div>
                             </div>
                             <div class="flex flex-col items-center pb-4">
-                                <h5 class="text-xl font-medium text-gray-900">{{ $service[0]->nom_service }}</h5>
+                                <h5 class="text-xl font-medium text-gray-900 mb-2">{{ $service[0]->nom_service }}</h5>
                                 @foreach ($service[0]->agents as $agent)
-                                    <li>{{ $agent->nom_agent }} {{ $agent->prenom_agent }}</li>
+                                   <h5 class="text-x font-medium text-gray-900">-> {{ $agent->nom_agent }} {{ $agent->prenom_agent }}</h5>
                                 @endforeach
                                 <div class="flex mt-4 space-x-3 md:mt-6">
                                     <a href="#"

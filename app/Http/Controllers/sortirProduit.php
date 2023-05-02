@@ -69,13 +69,13 @@ class sortirProduit extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request)
-    // {
-    //     $product = Produit::where('id_produit', $request->id)->first();
-    //     Produit::where('id_produit', $request->id)->update(['qte_p' => $product->qte_p - $request->quantity]);
+    public function update(Request $request)
+    {
+        $product = Produit::where('id_produit', $request->id)->first();
+        Produit::where('id_produit', $request->id)->update(['qte_p' => $product->qte_p - $request->quantity]);
 
-    //     return redirect('produits')->with('flash_message', 'Produit à été modifier!');
-    // }
+        return redirect('produits')->with('flash_message', 'Produit à été modifier!');
+    }
 
 
     /**

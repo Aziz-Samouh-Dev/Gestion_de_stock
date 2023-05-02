@@ -75,26 +75,41 @@ class ProduitController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, string $id)
-    // {
-    //     $produit = Produit::where('id_produit', $id);
-    //     if (!$produit) {
-    //         return redirect('produits')->with('flash_message', 'Produit non trouvé!');
-    //     }
+    public function update(Request $request, string $id)
+    {
+        $produit = Produit::where('id_produit', $id);
+        if (!$produit) {
+            return redirect('produits')->with('flash_message', 'Produit non trouvé!');
+        }
 
-    //     $input = $request->except(['_token', '_method']);
-    //     $produit->update($input);
+        $input = $request->except(['_token', '_method']);
+        $produit->update($input);
+
+        return redirect('produits')->with('flash_message', 'Produit à été modifier!');
+    }
+
+    // public function update(Request $request)
+    // {
+    //     $product = Produit::where('id_produit', $request->id)->first();
+    //     Produit::where('id_produit', $request->id)->update(['qte_p' => $product->qte_p - $request->quantity]);
 
     //     return redirect('produits')->with('flash_message', 'Produit à été modifier!');
     // }
 
-    public function update(Request $request)
-    {
-        $product = Produit::where('id_produit', $request->id)->first();
-        Produit::where('id_produit', $request->id)->update(['qte_p' => $product->qte_p - $request->quantity]);
+    // public function update(Request $request , $id)
+    // {
+    //     $product = Produit::find('id_produit', $id)->first();
 
-        return redirect('produits')->with('flash_message', 'Produit à été modifier!');
-    }
+    //     $product->nom_p = $request->input('nom_p');
+    //     $product->libelle_p = $request->input('libelle_p');
+    //     $product->qte_p = $request->input('qte_p');
+    //     $product->date_enter = $request->input('date_enter');
+
+    //     $product->save();
+
+    //     return redirect('produits')->with('flash_message', 'Le produit a été modifié avec succès!');
+    // }
+
 
 
 
