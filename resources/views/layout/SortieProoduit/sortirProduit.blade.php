@@ -6,11 +6,11 @@
     <div class=" p-4 sm:ml-64 bg-gray-200 min-h-screen">
 
         {{-- Add service & Agent & Produits --}}
-        <div id="initialView">
+        <div id="initialView" style="display: block;">
             <div class="border-2 rounded-lg shadow-lg bg-white ">
-                <div class="relative overflow-x-auto  p-3 grid grid-rows-4 gap-4  ">
+                <div class="relative overflow-x-auto  p-3 grid   ">
                     {{-- title --}}
-                    <div class=" px-4 ">
+                    <div class=" px-4 mb-4">
                         <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Sortir Produit</h1>
                     </div>
                     <div class=" flex flex-wrap">
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <div id="tableView" style="display: none;">
+        <div id="tableView" style="display: none">
             <div class="border-2 rounded-lg shadow-lg bg-white my-4 ">
                 <div class="relative overflow-x-auto shadow-md  p-3 ">
                     <div class=" px-4 ">
@@ -96,9 +96,10 @@
                         <tbody></tbody>
                     </table>
                     <div class=" p-3 flex justify-end">
-                        <a href="#" onclick="showAlert()" id="alertButton">
-                            <button
-                                class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 "
+                        <a href="#" id="alertButton">
+                            <button onclick="switchViews()"
+                                class="inline-flex items-center
+                                text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 "
                                 type="button" id="valider">
                                 <span class="sr-only">Valider </span>
                                 Valider
@@ -108,91 +109,115 @@
                 </div>
             </div>
         </div>
+        <div id="alertContainer" class="w-full flex justify-center" style="display: none;">
+            <div class="w-full flex justify-center">
+                <div id="alert" class="w-full p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50"
+                    role="alert">
 
+                    <div class="flex items-center justify-center">
+                        <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <h3 class="text-lg font-medium">Le stock est mis à jour avec succès</h3>
+                    </div>
+                    <div class="mt-2 mb-4 text-sm text-center">Télécharger le décharge</div>
+                    <div class="flex justify-center">
+                        <a href="#" id="downloadButton">
+                            <button
+                                class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-2 px-4"
+                                type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                                <span class="px-2">Télécharger</span>
+                            </button>
+                        </a>
+                    </div>
 
-
-
-
-        <div id="alertContainer" class="w-full flex justify-center">
-            <!-- Alert element will be dynamically added here -->
+                </div>
+            </div>
         </div>
 
-        <script>
-            function switchViews() {
-                const initialView = document.getElementById('initialView');
-                const tableView = document.getElementById('tableView');
+        <div class=" py-3  min-h-screen hidden" >
+            <div class=" bg-white">
+                <div class="border-2 rounded-lg shadow-lg bg-white">
+                    <div class="flex items-center justify-center mb-5 ">
+                        <div class=" w-full p-3 ">
+                            <div class=" px-4 ">
+                                <h1 class="text-4xl font-bold antialiased pb-3 pt-6 text-green-600 text-center">
+                                    Demande de décharge
+                                </h1>
+                            </div>
+                            <div class="p-6 bg-white  shadowdark:bg-gray-800 ">
+                                <p class="mb-2"><span class="font-bold">AGENT :</span> <span id="agentName"></span></p>
+                                <p class="mb-2"><span class="font-bold">SERVICE :</span> <span id="serviceName"></span></p>
+                                <p class="mb-4">Je soussigné(e), Marie Dupont, agissant en tant que représentant(e) du
+                                    Département des achats, déclare avoir reçu les produits suivants en sortie de l'entrepôt
+                                    :</p>
+                                <ul class="list-disc list-inside mb-4">
+                                </ul>
+                                <p class="mb-4">Je confirme que les produits ont été vérifiés et sont en bon état au
+                                    moment de la sortie de l'entrepôt. Je m'engage également à utiliser ces produits
+                                    conformément aux procédures et aux règles établies par l'entreprise.</p>
+                                <div class="flex justify-end">
+                                    <div class="w-48 h-px bg-gray-400 mt-6 mr-2"></div>
+                                    <p class="mt-4">Signature de l'agent :</p>
 
-                if (initialView.style.display === 'none') {
-                    // Switch to initial view
-                    initialView.style.display = 'block';
-                    tableView.style.display = 'none';
-                } else {
-                    // Switch to table view
-                    initialView.style.display = 'none';
-                    tableView.style.display = 'block';
-                }
-            }
-            var alertShown = false;
 
-            function showAlert() {
-                if (!alertShown) {
-                    // Create the alert element
-                    var alertElement = document.createElement("div");
-                    alertElement.className = "w-full p-4 mb-4";
-                    alertElement.setAttribute("role", "alert");
-                    alertElement.innerHTML = `
-                        <div class="w-full flex justify-center">
-                        <div id="alert " class="w-full p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 "
-                            role="alert">
-                            <div class="">
-                                <div class="flex items-center justify-center ">
-                                    <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                    <h3 class="text-lg font-medium"> le stock est mis à jour avec succés </h3>
                                 </div>
-                                <div class="mt-2 mb-4 text-sm text-center">
-                                    télecharger le décharge
-                                </div>
-                                <div class="flex justify-center">
-                                    <a href="#">
-                                        <button
-                                            class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-2 px-4 "
-                                            type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                                stroke="currentColor" class="w-6 h-6">
+                                <div class="px-6 py-3 flex justify-end">
+                                    <a href="#" id="printPageButton" class="btn btn-sm btn-primary mb-3"
+                                        onclick="document.getElementById('printPageButton').style.display = 'none';window.print();"
+                                        class="btn btn-md btn-primary mr-2 mb-2">
+                                        <button type="button"
+                                            class=" text-blue-700 hover:text-white border border-green-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-500 font-medium rounded-lg text-sm px-1.5 py-1 text-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
                                             </svg>
-                                            <span class="px-2">Télécharger</span>
                                         </button>
                                     </a>
+                                    <a href="#" id="printPageButton" class="btn btn-sm btn-primary mb-3"
+                                        onclick="document.getElementById('printPageButton').style.display = 'none';window.print();"
+                                        class="btn btn-md btn-primary mr-2 mb-2">
+                                        <i class="fas fa-print"></i>
+                                    </a>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                     `;
-
-                    // Append the alert element to the alert container
-                    var alertContainer = document.getElementById("alertContainer");
-                    alertContainer.appendChild(alertElement);
-
-                    // Set the flag to true to indicate that the alert has been shown
-                    alertShown = true;
-
-                    // Disable the button
-                    document.getElementById("valider").disabled = true;
-                }
-            }
-        </script>
-
+                </div>
+            </div>
+        </div>
 
     </div>
 
     <script>
+
+        function switchViews() {
+            const initialView = document.getElementById('initialView');
+            const tableView = document.getElementById('tableView');
+            const alertContainer = document.getElementById('alertContainer');
+
+            if (initialView.style.display === 'block') {
+                // Switch from initial view to table view
+                initialView.style.display = 'none';
+                tableView.style.display = 'block';
+            } else if (tableView.style.display === 'block') {
+                // Switch from table view to alert view
+                tableView.style.display = 'none';
+                alertContainer.style.display = 'block';
+            }
+        }
+
+
         var addedProducts = []; // Array to store added product IDs
         var addedQts = []; // Array to store added product IDs
 
@@ -209,7 +234,6 @@
                 addedProducts.push(productId);
             }
         }
-
 
         document.getElementById('dropdownActionButton').addEventListener('click', function() {
             var checkboxes = document.querySelectorAll('input[name="weekly"]:checked');
@@ -228,18 +252,18 @@
                     var row = document.createElement('tr');
                     row.setAttribute('data-product-id', productId);
                     row.innerHTML = `
-                <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
-                    <div class="text-base font-semibold">
-                        ${productName}
-                    </div>
-                </td>
-                <td class="px-4 py-3">
-                    ${quantityLabel}
-                </td>
-                <td class="px-4 py-3 flex items-center">
-                    <input max="${quantityLabel - 1}" id="qte_d" value='1' type="number" min="1" class="w-24 p-2 border contrast-more:border-slate-400" />
-                </td>
-            `;
+                            <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                                <div class="text-base font-semibold">
+                                    ${productName}
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">
+                                ${quantityLabel}
+                            </td>
+                            <td class="px-4 py-3 flex items-center">
+                                <input max="${quantityLabel}" id="qte_d" value='1' type="number" min="1" class="w-24 p-2 border contrast-more:border-slate-400" />
+                            </td>
+                        `;
 
                     var tableBody = document.querySelector('#dataTable tbody');
                     tableBody.appendChild(row);
@@ -248,9 +272,7 @@
                 }
             });
 
-
         });
-
 
         document.getElementById('serviceSelect').addEventListener('change', function() {
             var serviceId = this.value; // Get the selected service ID
@@ -280,8 +302,6 @@
                 xhr.send();
             }
         });
-
-
 
         document.getElementById('valider').addEventListener('click', function() {
             // Iterate through the added products
@@ -331,10 +351,10 @@
         });
     </script>
 
+
+
+
+
+
     </div>
-
-
-
 @endsection
-
-
