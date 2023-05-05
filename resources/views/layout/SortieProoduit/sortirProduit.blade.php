@@ -99,7 +99,7 @@
                         <a href="#" id="alertButton">
                             <button onclick="switchViews()"
                                 class="inline-flex items-center
-                                text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 "
+                                            text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 "
                                 type="button" id="valider">
                                 <span class="sr-only">Valider </span>
                                 Valider
@@ -125,7 +125,7 @@
                     </div>
                     <div class="mt-2 mb-4 text-sm text-center">Télécharger le décharge</div>
                     <div class="flex justify-center">
-                        <a href="#" id="downloadButton">
+                        <a href="#" id="printPageButton">
                             <button
                                 class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-2 px-4"
                                 type="button">
@@ -143,52 +143,35 @@
             </div>
         </div>
 
-        <div class=" py-3  min-h-screen hidden" >
-            <div class=" bg-white">
-                <div class="border-2 rounded-lg shadow-lg bg-white">
+        <div class=" py-3  min-h-screen hidden">
+            <div class=" bg-white" id="content">
+                <div class=" shadow-lg bg-white">
                     <div class="flex items-center justify-center mb-5 ">
                         <div class=" w-full p-3 ">
-                            <div class=" px-4 ">
+                            <div class="flex justify-center">
+                                <img src="images/bigLogo.png" alt="" class="w-48" >
+                            </div>
+                            <div class=" px-4">
                                 <h1 class="text-4xl font-bold antialiased pb-3 pt-6 text-green-600 text-center">
                                     Demande de décharge
                                 </h1>
                             </div>
                             <div class="p-6 bg-white  shadowdark:bg-gray-800 ">
-                                <p class="mb-2"><span class="font-bold">AGENT :</span> <span id="agentName"></span></p>
-                                <p class="mb-2"><span class="font-bold">SERVICE :</span> <span id="serviceName"></span></p>
-                                <p class="mb-4">Je soussigné(e), Marie Dupont, agissant en tant que représentant(e) du
+                                <p class="mb-2"><span class="font-bold pr-2">AGENT </span> <span class="font-bold pr-2"> : </span><span id="agentName"></span></p>
+                                <p class="mb-2"><span class="font-bold pr-2">SERVICE </span><span class="font-bold pr-2"> : </span> <span id="serviceName"></span>
+                                </p>
+                                <p class="mb-4">
+                                    Je soussigné(e), <span id="agentName"></span>, agissant en tant que représentant(e) du
                                     Département des achats, déclare avoir reçu les produits suivants en sortie de l'entrepôt
-                                    :</p>
-                                <ul class="list-disc list-inside mb-4">
-                                </ul>
+                                    :
+                                </p>
+                                <ul class="list-disc list-inside mb-4" id="productList"></ul>
+
                                 <p class="mb-4">Je confirme que les produits ont été vérifiés et sont en bon état au
                                     moment de la sortie de l'entrepôt. Je m'engage également à utiliser ces produits
                                     conformément aux procédures et aux règles établies par l'entreprise.</p>
-                                <div class="flex justify-end">
-                                    <div class="w-48 h-px bg-gray-400 mt-6 mr-2"></div>
+                                <div class="flex justify-end mr-8 pt-7">
                                     <p class="mt-4">Signature de l'agent :</p>
-
-
-                                </div>
-                                <div class="px-6 py-3 flex justify-end">
-                                    <a href="#" id="printPageButton" class="btn btn-sm btn-primary mb-3"
-                                        onclick="document.getElementById('printPageButton').style.display = 'none';window.print();"
-                                        class="btn btn-md btn-primary mr-2 mb-2">
-                                        <button type="button"
-                                            class=" text-blue-700 hover:text-white border border-green-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-500 font-medium rounded-lg text-sm px-1.5 py-1 text-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
-                                            </svg>
-                                        </button>
-                                    </a>
-                                    <a href="#" id="printPageButton" class="btn btn-sm btn-primary mb-3"
-                                        onclick="document.getElementById('printPageButton').style.display = 'none';window.print();"
-                                        class="btn btn-md btn-primary mr-2 mb-2">
-                                        <i class="fas fa-print"></i>
-                                    </a>
-
                                 </div>
                             </div>
                         </div>
@@ -200,12 +183,10 @@
     </div>
 
     <script>
-
         function switchViews() {
             const initialView = document.getElementById('initialView');
             const tableView = document.getElementById('tableView');
             const alertContainer = document.getElementById('alertContainer');
-
             if (initialView.style.display === 'block') {
                 // Switch from initial view to table view
                 initialView.style.display = 'none';
@@ -216,7 +197,6 @@
                 alertContainer.style.display = 'block';
             }
         }
-
 
         var addedProducts = []; // Array to store added product IDs
         var addedQts = []; // Array to store added product IDs
@@ -242,6 +222,7 @@
                 var productId = checkbox.id.replace('checkbox-item-', '');
                 var productName = checkbox.nextElementSibling.innerText;
                 var quantityLabel = checkbox.nextElementSibling.nextElementSibling.innerText;
+                var maxQuantity = parseInt(quantityLabel);
 
                 if (isProductAdded(productId)) {
                     var existingRow = document.querySelector(
@@ -252,26 +233,25 @@
                     var row = document.createElement('tr');
                     row.setAttribute('data-product-id', productId);
                     row.innerHTML = `
-                            <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
-                                <div class="text-base font-semibold">
-                                    ${productName}
-                                </div>
-                            </td>
-                            <td class="px-4 py-3">
-                                ${quantityLabel}
-                            </td>
-                            <td class="px-4 py-3 flex items-center">
-                                <input max="${quantityLabel}" id="qte_d" value='1' type="number" min="1" class="w-24 p-2 border contrast-more:border-slate-400" />
-                            </td>
-                        `;
+                        <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                            <div class="text-base font-semibold">${productName}</div>
+                        </td>
+                        <td class="px-4 py-3">
+                            ${quantityLabel}
+                        </td>
+                        <td class="px-4 py-3 flex items-center">
+                            <input max="${maxQuantity}" id="qte_d" type="number" min="0"
+                                class="w-24 p-2 border contrast-more:border-slate-400" />
+                        </td>
+                    `;
 
                     var tableBody = document.querySelector('#dataTable tbody');
                     tableBody.appendChild(row);
 
                     addedProducts.push(productId);
+
                 }
             });
-
         });
 
         document.getElementById('serviceSelect').addEventListener('change', function() {
@@ -292,16 +272,31 @@
                         agents.forEach(function(agent) {
                             var option = document.createElement('option');
                             option.value = agent.id_agent;
-                            option.text = agent.nom_agent + ' ' + agent
-                                .prenom_agent;
-                            document.getElementById('agent').appendChild(
-                                option);
+                            option.text = agent.nom_agent + ' ' + agent.prenom_agent;
+                            document.getElementById('agent').appendChild(option);
                         });
+                        // Update the agent name based on the selected agent
+                        updateAgentName();
                     }
                 };
                 xhr.send();
+
+                // Update the service name
+                var serviceName = this.selectedOptions[0].text;
+                document.getElementById('serviceName').innerText = serviceName;
             }
         });
+
+        document.getElementById('agent').addEventListener('change', function() {
+            // Update the agent name based on the selected agent
+            updateAgentName();
+        });
+
+        function updateAgentName() {
+            var agentSelect = document.getElementById('agent');
+            var selectedAgent = agentSelect.options[agentSelect.selectedIndex].text;
+            document.getElementById('agentName').innerText = selectedAgent;
+        }
 
         document.getElementById('valider').addEventListener('click', function() {
             // Iterate through the added products
@@ -309,52 +304,95 @@
                 var addedProduct = addedProducts[i];
                 var xhr = new XMLHttpRequest();
 
-                // Get the qte_d input element for the current iteration
-                var qte_dInput = document.getElementById('qte_d');
-
-                if (qte_dInput !== null) {
-                    var qte_dValue = qte_dInput.value;
-                    console.log(qte_dValue);
-
-                    // Set the request URL and method
-                    xhr.open('POST', '/updateProduct', true);
-
-                    // Set the request headers (if needed)
-                    xhr.setRequestHeader('Content-Type', 'application/json');
-                    xhr.setRequestHeader(
-                        'X-CSRF-TOKEN', '{{ csrf_token() }}');
-
-                    // Set the request payload
-                    var payload = JSON.stringify({
-                        id: addedProduct,
-                        quantity: qte_dValue
-                    });
-
-                    // Handle the response
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
-                                // Handle the successful response
-                                alert('Product updated successfully');
-
-                            } else {
-                                // Handle the error response
-                                alert('Failed to update product');
-                            }
-                        }
-                    };
-
-                    // Send the request
-                    xhr.send(payload);
+                // Retrieve the value of the input field
+                var qte_dInputs = document.querySelectorAll('input[id="qte_d"]');
+                var qte_dValue;
+                for (var j = 0; j < qte_dInputs.length; j++) {
+                    if (qte_dInputs[j].closest('tr').getAttribute('data-product-id') === addedProduct) {
+                        qte_dValue = qte_dInputs[j].value;
+                        break;
+                    }
                 }
+                console.log(qte_dValue);
+
+                // Set the request URL and method
+                xhr.open('POST', '/updateProduct', true);
+
+                // Set the request headers (if needed)
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+                // Set the request payload
+                var payload = JSON.stringify({
+                    id: addedProduct,
+                    quantity: qte_dValue
+                });
+
+                // Handle the response
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Handle the successful response
+                        } else {
+                            // Handle the error response
+                            alert('Failed to update product');
+                        }
+                    }
+                };
+
+                // Send the request
+                xhr.send(payload);
+
+                // Add the product to the product list
+                var productName;
+                var checkboxes = document.querySelectorAll('input[name="weekly"]:checked');
+                checkboxes.forEach(function(checkbox) {
+                    var productId = checkbox.id.replace('checkbox-item-', '');
+                    if (productId === addedProduct) {
+                        productName = checkbox.nextElementSibling.innerText;
+                        return;
+                    }
+                });
+
+                var productList = document.getElementById('productList');
+                var li = document.createElement('li');
+                li.setAttribute('data-product-id', addedProduct);
+                li.textContent = `${qte_dValue} boîtes de ${productName}`;
+
+                productList.appendChild(li);
+                
             }
         });
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
+    <script>
+        document.getElementById('printPageButton').addEventListener('click', function() {
+            // Set the options for html2pdf
+            var options = {
+                filename: 'demande_decharge.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait'
+                }
+            };
 
+            // Set the content to be added to the PDF
+            var content = document.getElementById('content');
 
-
+            // Generate the PDF
+            html2pdf().from(content).set(options).save();
+        });
+    </script>
 
     </div>
 @endsection

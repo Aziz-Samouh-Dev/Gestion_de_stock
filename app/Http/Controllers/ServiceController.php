@@ -14,13 +14,6 @@ class ServiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-    // public function index()
-    // {
-    //     $services = Service::with('agents')->get();
-    //     return view('layout.Service.services', compact('services'));
-    // }
-
     public function index()
     {
         $services = Service::with('agents')->get()->groupBy('id_service');
@@ -37,54 +30,6 @@ class ServiceController extends Controller
         $services = Service::all();
         return view('layout.Service.ajouteService', compact('services', 'agents'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(Request $request)
-    // {
-    //     // Validate the form data
-    //     $validatedData = $request->validate([
-    //         'nom_service' => 'required|string|max:255',
-    //         'nom_agent' => 'required|array',
-    //         'nom_agent.*' => 'exists:agents,id_agent', // Assuming "agents" is the table name for the agents
-    //     ]);
-
-    //     // Store the service
-    //     $service = new Service();
-    //     $service->nom_service = $validatedData['nom_service'];
-    //     $service->save();
-
-    //     // Attach the selected agents to the service
-    //     $service->agents()->attach($validatedData['nom_agent']);
-
-    //     // Redirect or return a response as needed
-    //     // Example:
-    //     return redirect()->back()->with('success', 'Service created successfully.');
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     // Validate the form data
-    //     $validatedData = $request->validate([
-    //         'nom_service' => 'required|string|max:255',
-    //         'nom_agent' => 'required|array',
-    //         'nom_agent.*' => 'exists:agents,id_agent',
-    //     ]);
-
-    //     // Store the service
-    //     $service = new Service();
-    //     $service->nom_service = $validatedData['nom_service'];
-    //     $service->save();
-
-    //     // Attach the selected agents to the service
-    //     $service->agents()->attach($validatedData['nom_agent']);
-
-    //     // Redirect to a route or return a response as needed
-    //     // Example:
-    //     return redirect()->back()->with('success', 'Service created successfully.');
-    // }
-
 
     public function store(Request $request)
     {
@@ -120,24 +65,49 @@ class ServiceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $service = Service::with('agents')->findOrFail($id);
+
+        return view('layout.Service.view', compact('service'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $service = Service::findOrFail( $id);
+        $agents = Agent::all();
+        return view('layout.Service.edit', compact('service', 'agents'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        // 
+        // Validate the form data
+        $validatedData = $request->validate([
+            'nom_service' => 'required|string|max:255',
+            'id_agent' => 'required|array',
+        ]);
+
+        // Find the service by its ID
+        $service = Service::findOrFail($id);
+
+        // Update the service details
+        $service->update([
+            'nom_service' => $validatedData['nom_service'],
+        ]);
+
+        // Sync the selected agents for the service
+        $service->agents()->sync($validatedData['id_agent']);
+
+        return redirect()->route('services.index')->with('success', 'Service updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

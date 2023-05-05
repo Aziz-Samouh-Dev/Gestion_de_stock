@@ -1,5 +1,5 @@
 @extends('/layout.layout')
-@section('title', 'Ajouter produit')
+@section('title', 'Edit Service')
 @section('content')
     <div class="p-4 sm:ml-64 bg-gray-200 min-h-screen">
         <div class="border-2 rounded-lg shadow-lg bg-white">
@@ -7,47 +7,43 @@
                 <div class="flex items-center justify-center mb-5 ">
                     <div class=" w-full p-3 ">
                         <div class=" px-4 ">
-                            <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Edite Produit</h1>
+                            <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Edit Service</h1>
                         </div>
-                        <form action="{{ url('agents/' . $agents->id_agent) }}" method="post"> @csrf
-                            @method('PATCH') <div class="-mx-3 flex flex-wrap">
-                                <div class="w-full px-3 ">
-                                    <div class="mb-5">
-                                        <label for="nom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
-                                            Nom:
-                                        </label>
-                                        <input type="text" name="nom_agent" id="nom_agent" placeholder="Name"
-                                            value="{{ $agents->nom_agent }}"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                    </div>
-                                </div>
-                            </div>
+                        <form action="{{ route('services.update', $service->id_service) }}" method="post"> 
+                            @csrf
+                            @method('PATCH') 
                             <div class="-mx-3 flex flex-wrap">
                                 <div class="w-full px-3 ">
                                     <div class="mb-5">
-                                        <label for="prenom_agent"
-                                            class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
-                                            Prenom:
+                                        <label for="nom_service" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
+                                            Nom Service:
                                         </label>
-                                        <input type="text" name="prenom_agent" id="prenom_agent" placeholder="Prenom"
-                                            value="{{ $agents->prenom_agent }}"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                        <input type="text" name="nom_service" id="nom_service" placeholder="Name"
+                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            value="{{ $service->nom_service }}" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="-mx-3 flex flex-wrap">
-                                <div class="w-full px-3 ">
-                                    <div class="mb-5">
-                                        <label for="grade_agent"
-                                            class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
-                                            Grade:
-                                        </label>
-                                        <input type="text" name="grade_agent" id="grade_agent" placeholder="Grade"
-                                            value="{{ $agents->grade_agent }}"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                    </div>
-                                </div>
-                            </div>
+                            <label for="prenom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
+                                Nom Agents
+                            </label>
+                            <ul class="py-3 border h-auto grid grid-cols-2 gap-4 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 lg:grid-cols-3 ">
+                                @foreach ($agents as $agent)
+                                    <li>
+                                        <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                            <input id="agent_{{ $agent->id_agent }}" type="checkbox" name="id_agent[]"
+                                                value="{{ $agent->id_agent }}"
+                                                class="defaultCheckbox relative flex h-[20px] min-h-[20px] w-[20px] min-w-[20px] appearance-none items-center justify-center rounded-md border border-gray-300 text-white/0 outline-none transition duration-[0.2s] checked:text-white hover:cursor-pointer checked:bg-green-600"
+                                                {{ in_array($agent->id_agent, $service->agents->pluck('id_agent')->toArray()) ? 'checked' : '' }} />
+                                            <label for="agent_{{ $agent->id_agent }}"
+                                                class="w-full ml-2 text-sm font-medium text-gray-400 rounded">
+                                                {{ $agent->nom_agent }} {{ $agent->prenom_agent }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                @endforeach
+                         
+                            </ul>
                             <div class="flex items-center justify-center pt-5">
                                 <button type="submit"
                                     class=" hover:shadow-form inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 ">
@@ -59,5 +55,4 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+</div>@endsection

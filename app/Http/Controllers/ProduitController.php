@@ -42,8 +42,8 @@ class ProduitController extends Controller
         $input = $request->except('_token');
 
         // Generate a random auto-incremented ref_p value
-        $randomNumber = mt_rand(1, 999999); // Generate a random 3-digit number
-        $input['ref_p'] = 'Prod-'  . str_pad($randomNumber + 1, 3, '0', STR_PAD_LEFT);
+        $randomNumber = mt_rand(1, 9999999); // Generate a random 3-digit number
+        $input['ref_p'] = 'abhdon-'  . str_pad($randomNumber + 1, 3, '0', STR_PAD_LEFT);
 
 
         Produit::create($input);

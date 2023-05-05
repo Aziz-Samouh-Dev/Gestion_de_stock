@@ -21,7 +21,7 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <input type="search" id="rechercher" name="rechercher"
+                            <input type="search" id="searchInput" name="rechercher"
                                 class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg  w-64 focus:ring-blue-500 focus:border-blue-500 outline-none "
                                 placeholder="Rechercher produit">
                         </div>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="relative overflow-x-auto  sm:rounded-lg mb-5">
-                    <table class="w-full text-sm text-left text-gray-500 border  bg-dark">
+                    <table id="my-table" class="w-full text-sm text-left text-gray-500 border  bg-dark">
                         <thead class="text-xs text-gray-100 uppercase bg-gray-500 px-4 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3 ">
@@ -70,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody id="Content">
-                   
+
 
                             @foreach ($produits as $item)
                                 <tr class="bg-white border-b">
@@ -108,8 +108,7 @@
                                                 </svg>
                                             </button>
                                         </a>
-                                        <a href=" {{ url('/produits/' . $item->id_produit) . '/edit' }} "
-                                            title="View P">
+                                        <a href=" {{ url('/produits/' . $item->id_produit) . '/edit' }} " title="View P">
                                             <button type="button"
                                                 class=" text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-500 font-medium rounded-lg text-sm px-1.5 py-1 text-center mr-2  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -145,4 +144,35 @@
             </div>
         </div>
     </div>
+
+
+        <!-- Script to filter table rows based on search input -->
+    <script>
+        // Get the search input element
+        var searchInput = document.getElementById("searchInput");
+
+        // Add event listener to the search input
+        searchInput.addEventListener("keyup", function() {
+            // Get the search value and convert it to lowercase
+            var searchValue = this.value.toLowerCase();
+
+            // Get all table rows in the tbody
+            var rows = document.querySelectorAll("#my-table tbody tr");
+
+            // Loop through each row and hide/show based on search value
+            rows.forEach(function(row) {
+                // Get the text content of each cell in the row
+                var rowData = row.textContent.toLowerCase();
+
+                // Check if the search value is found in the row data
+                if (rowData.includes(searchValue)) {
+                    // Show the row if the search value is found
+                    row.style.display = "";
+                } else {
+                    // Hide the row if the search value is not found
+                    row.style.display = "none";
+                }
+            });
+        });
+    </script>
 @endsection

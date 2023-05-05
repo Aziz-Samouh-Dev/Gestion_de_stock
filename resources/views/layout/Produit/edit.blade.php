@@ -45,7 +45,7 @@
                                         <label for="qte_p" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
                                             Quantité:
                                         </label>
-                                        <input type="number" name="qte_p" id="qte_p" placeholder="Quantité"
+                                        <input type="number" min="1" name="qte_p" id="qte_p" placeholder="Quantité"
                                             value="{{ $produits->qte_p }}"
                                             class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                     </div>

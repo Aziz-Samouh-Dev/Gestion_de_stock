@@ -1,6 +1,10 @@
 @extends('layout.layout')
 @section('title', 'services')
 @section('content')
+    {{-- @foreach ($service[0]->agents as $agent)
+                                    <h5 class="text-x font-medium text-gray-900">-> {{ $agent->nom_agent }}
+                                        {{ $agent->prenom_agent }}</h5>
+                                @endforeach --}}
     <div class="p-4 sm:ml-64 bg-gray-200 min-h-screen ">
         <div class="border-2 rounded-lg shadow-lg bg-white">
             <div class="relative overflow-x-auto shadow-md p-3 ">
@@ -17,9 +21,8 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <input type="text" id="table-search-users"
-                            class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-64 focus:ring-blue-500 focus:border-blue-500 outline-none "
-                            placeholder="Rechercher Servise">
+                        <input type="text" id="searchInput" placeholder="Rechercher Servise"
+                            class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-64 focus:ring-blue-500 focus:border-blue-500 outline-none ">
                     </div>
                     <div>
                         <a href="{{ url('services\create') }}">
@@ -35,9 +38,10 @@
                         </a>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 grid-cols-3 gap-4 py-4 px-2 ">
+                <div
+                    class="w-full grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 justify-between py-4 px-2 ">
                     @foreach ($services as $service)
-                        <div class="w-full max-w-sm border border-gray-200 rounded-lg hover:shadow-lg ">
+                        <div id="card-body" class="w-full max-w-sm border border-gray-200 rounded-lg hover:shadow-lg ">
                             <div class="flex justify-end px-4 pt-2">
                                 <button id="dropdownButton" data-dropdown-toggle="dropdown"
                                     class="inline-block text-gray-500 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg text-sm p-1.5"
@@ -53,13 +57,13 @@
                                     class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-xl w-44">
                                     <ul class="py-2" aria-labelledby="dropdownButton">
                                         <li>
-                                            <a href="#"
+                                            <a href="{{ url('/services/' . $service[0]->id_service) . '/edit' }}"
                                                 class="block px-4 py-2 text-sm text-green-700 hover:bg-gray-100 ">Edit</a>
                                         </li>
                                         <li>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 ">
+                                            <a href="#">
                                                 <form method="post"
+                                                    class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 "
                                                     action=" {{ url('/services/' . $service[0]->id_service) }} ">
                                                     @csrf
                                                     {{ method_field('DELETE') }}
@@ -74,14 +78,14 @@
                             </div>
                             <div class="flex flex-col items-center pb-4">
                                 <h5 class="text-xl font-medium text-gray-900 mb-2">{{ $service[0]->nom_service }}</h5>
-                                @foreach ($service[0]->agents as $agent)
-                                   <h5 class="text-x font-medium text-gray-900">-> {{ $agent->nom_agent }} {{ $agent->prenom_agent }}</h5>
-                                @endforeach
+
                                 <div class="flex mt-4 space-x-3 md:mt-6">
-                                    <a href="#"
-                                        class="inline-flex items-center px-4 py-2 text-white border-yellow-700 bg-yellow-500 hover:bg-yellow-400 focus:ring-1 focus:outline-none focus:ring-yellow-500 font-medium rounded-lg text-sm text-center ">
-                                        View</a>
+                                    <a href="{{ url('/services/' . $service[0]->id_service) }} }}"
+                                        class="inline-flex items-center px-4 py-2 text-white border-yellow-700 bg-yellow-500 hover:bg-yellow-400 focus:ring-1 focus:outline-none focus:ring-yellow-500 font-medium rounded-lg text-sm text-center">
+                                        View
+                                    </a>
                                 </div>
+
                             </div>
                         </div>
                     @endforeach
@@ -89,4 +93,38 @@
             </div>
         </div>
     </div>
+    <script>
+        // Get the search input element
+        var searchInput = document.getElementById("searchInput");
+
+        // Get all card bodies
+        var cardBodies = document.querySelectorAll("#card-body");
+
+        // Add event listener to the search input
+        searchInput.addEventListener("keyup", function() {
+            // Get the search value and convert it to lowercase
+            var searchValue = this.value.toLowerCase();
+
+            // Loop through each card body and hide/show based on search value
+            cardBodies.forEach(function(cardBody) {
+                // Get the service name element within the card body
+                var serviceNameElement = cardBody.querySelector("h5");
+
+                // Get the text content of the service name and convert it to lowercase
+                var serviceName = serviceNameElement.textContent.toLowerCase();
+
+                // Check if the search value is found in the service name
+                if (serviceName.includes(searchValue)) {
+                    // Show the card body if the search value is found
+                    cardBody.style.display = "";
+                } else {
+                    // Hide the card body if the search value is not found
+                    cardBody.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+
+
 @endsection
