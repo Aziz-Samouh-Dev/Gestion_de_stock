@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Produit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class ProduitController extends Controller
@@ -30,26 +29,36 @@ class ProduitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request)
-    // {
-    //     //
-    //     $input = $request->all();
-    //     Produit::create($input);
-    //     return redirect('produits')->with('flash_message', 'produit Ajouté !');
-    // }
     public function store(Request $request)
     {
-        $input = $request->except('_token');
+        // validate the form data
+        $validated = $request->validate([
+            'nom_p' => 'required|string|max:255',
+            'libelle_p' => 'required|string|max:255',
+            'qte_p' => 'required|numeric|min:1',
+            'date_enter' => 'required|date'
+        ]);
 
         // Generate a random auto-incremented ref_p value
-        $randomNumber = mt_rand(1, 9999999); // Generate a random 3-digit number
-        $input['ref_p'] = 'abhdon-'  . str_pad($randomNumber + 1, 3, '0', STR_PAD_LEFT);
+        $randomNumber = mt_rand(1, 999999); // Generate a random 3-digit number
+        $ref_p = 'abhdon-'  . str_pad($randomNumber + 1, 3, '0', STR_PAD_LEFT);
 
+        // create a new product object with the validated data
+        $produit = new Produit();
+        $produit->nom_p = $validated['nom_p'];
+        $produit->ref_p = $ref_p;
+        $produit->libelle_p = $validated['libelle_p'];
+        $produit->qte_p = $validated['qte_p'];
+        $produit->qte_d = $validated['qte_p'];
+        $produit->date_enter = $validated['date_enter'];
+        $produit->qte_alert = 'disponible';
 
-        Produit::create($input);
+        // save the product to the database
+        $produit->save();
 
-        return redirect('produits')->with('flash_message', 'Produit ajouté !');
+        return redirect('/produits')->with('success', 'Produit ajouté avec succès!');
     }
+
 
 
     /**
@@ -77,42 +86,36 @@ class ProduitController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $produit = Produit::where('id_produit', $id);
+        $produit = Produit::where('id_produit', $id)->first();
         if (!$produit) {
             return redirect('produits')->with('flash_message', 'Produit non trouvé!');
         }
 
-        $input = $request->except(['_token', '_method']);
-        $produit->update($input);
+        // validate the form data
+        $validated = $request->validate([
+            'nom_p' => 'required|string|max:255',
+            'libelle_p' => 'required|string|max:255',
+            'qte_p' => 'required|numeric|min:1',
+            'date_enter' => 'required|date'
+        ]);
 
-        return redirect('produits')->with('flash_message', 'Produit à été modifier!');
+
+        $qte_db = $validated['qte_p'] -  $produit->qte_p ;
+
+        // update the product with the validated data
+        $produit->nom_p = $validated['nom_p'];
+        $produit->libelle_p = $validated['libelle_p'];
+
+        $produit->qte_p = $validated['qte_p'];
+        $produit->qte_d = $qte_db + $produit->qte_d ;
+
+        $produit->date_enter = $validated['date_enter'];
+
+        // save the updated product to the database
+        $produit->save();
+
+        return redirect('produits')->with('flash_message', 'Produit a été modifié avec succès!');
     }
-
-    // public function update(Request $request)
-    // {
-    //     $product = Produit::where('id_produit', $request->id)->first();
-    //     Produit::where('id_produit', $request->id)->update(['qte_p' => $product->qte_p - $request->quantity]);
-
-    //     return redirect('produits')->with('flash_message', 'Produit à été modifier!');
-    // }
-
-    // public function update(Request $request , $id)
-    // {
-    //     $product = Produit::find('id_produit', $id)->first();
-
-    //     $product->nom_p = $request->input('nom_p');
-    //     $product->libelle_p = $request->input('libelle_p');
-    //     $product->qte_p = $request->input('qte_p');
-    //     $product->date_enter = $request->input('date_enter');
-
-    //     $product->save();
-
-    //     return redirect('produits')->with('flash_message', 'Le produit a été modifié avec succès!');
-    // }
-
-
-
-
 
     /**
      * Remove the specified resource from storage.

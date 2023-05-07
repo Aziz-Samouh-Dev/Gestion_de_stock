@@ -61,17 +61,18 @@
                                                 class="block px-4 py-2 text-sm text-green-700 hover:bg-gray-100 ">Edit</a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                <form method="post"
-                                                    class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 "
-                                                    action=" {{ url('/services/' . $service[0]->id_service) }} ">
-                                                    @csrf
-                                                    {{ method_field('DELETE') }}
-                                                    <button type="submit" title="Delete service"
-                                                        onclick=" return confirm('confirm delete ? ') "
-                                                        type="button">Delet</button>
-                                                </form>
-                                            </a>
+                                        
+                                            <form method="post"
+                                                action="  {{ url('/services/' . $service[0]->id_service) }} ">
+                                                @csrf
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" title="Delete P"
+                                                    onclick=" return confirm('confirm delete ? ') " type="button"
+                                                    class="w-full   px-4 py-2 text-sm text-red-600 hover:bg-gray-100 ">
+                                                    <span class="flex">Delet</span>
+                                                </button>
+    
+                                            </form>
                                         </li>
                                     </ul>
                                 </div>

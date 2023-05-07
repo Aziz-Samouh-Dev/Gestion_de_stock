@@ -20,9 +20,7 @@ use App\Http\Controllers\etat_de_stockController;
 |
 */
 
-Route::get('/', function () {
-    return view('inscription');
-});
+Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
 
 Route::resource('/produits', ProduitController::class);
 

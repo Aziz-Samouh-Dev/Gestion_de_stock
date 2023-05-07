@@ -33,7 +33,7 @@
                                 class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg md:text-sm md:py-3 md:px-2 md:w-56  w-30 text-xs py-2 px-1 "
                                 type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor"  class="w-6 h-6 ml-2">
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
@@ -44,55 +44,59 @@
                         </a>
                     </div>
                 </div>
-
-                <table id="my-table" class="w-full text-sm text-left text-gray-500 border mb-5 bg-dark">
-                    <thead class="text-xs text-gray-100 uppercase bg-gray-500 px-4">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 ">
-                                Nom Produit
-                            </th>
-                            <th scope="col" class="px-4 py-3">
-                                Ref
-                            </th>
-                            <th scope="col" class="px-4 py-3">
-                                Date D'Entrée
-                            </th>
-                            <th scope="col" class="px-4 py-3">
-                                Qte debut
-                            </th>
-
-                            <th scope="col" class="px-4 py-3">
-                                Qte Total
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($produits as $item)
-                            <tr class="bg-white border-b">
-                                <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap ">
-                                    <div class="text-base font-semibold">
-                                        {{ $item->nom_p }}
-                                    </div>
+                <div class="relative overflow-x-auto  sm:rounded-lg mb-5">
+                    <table id="my-table" class="w-full text-sm text-left text-gray-500 border  bg-dark">
+                        <thead class="text-xs text-gray-100 uppercase bg-gray-500 px-4 ">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 ">
+                                    Nom Produit
                                 </th>
-                                <td class="px-4 py-3">
-                                    {{ $item->ref_p }}
-                                </td>
-                                <td class="px-4 py-3">
-                                    {{ $item->date_enter }}
-                                </td>
-                                <td class="px-4 py-3">
-                                    {{ $item->qte_p }}
-                                </td>
-                                <td class="px-4 py-3">
-                                    {{ $item->qte_p }}
-                                </td>
-
+                                <th scope="col" class="px-4 py-3">
+                                    RÉFÉRENCE
+                                </th>
+                                <th scope="col" class="px-4 py-3">
+                                    Date D'Entrée
+                                </th>
+                                <th scope="col" class="px-4 py-3">
+                                    Quantité disponible
+                                </th>
+                                <th scope="col" class="px-4 py-3">
+                                    quantité retirée
+                                </th>
+                                <th scope="col" class="px-4 py-3">
+                                    quantité total
+                                </th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
 
+                            @foreach ($produits as $item)
+                                <tr class="bg-white border-b">
+                                    <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap ">
+                                        <div class="text-base font-semibold">
+                                            {{ $item->nom_p }}
+                                        </div>
+                                    </th>
+                                    <td class="px-4 py-3">
+                                        {{ $item->ref_p }}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {{ $item->date_enter }}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {{ $item->qte_p }}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {{ $item->qte_d - $item->qte_p }}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {{ $item->qte_d }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

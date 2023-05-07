@@ -19,7 +19,7 @@ class ServiceController extends Controller
         $services = Service::with('agents')->get()->groupBy('id_service');
 
 
-        return view('layout.Service.services', compact('services'));
+        return view('layout.Service.services', compact('services' ));
     }
 
 
@@ -53,7 +53,7 @@ class ServiceController extends Controller
                 "id_agent" => $item,
             ]);
         }
-        return redirect()->route('services.create')->with('success', 'Service created successfully.');
+        return redirect()->route('services.index')->with('success', 'Service created successfully.');
 
         // Redirect back to the form with a success message
     }
