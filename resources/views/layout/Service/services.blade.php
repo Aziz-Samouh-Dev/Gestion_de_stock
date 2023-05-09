@@ -61,7 +61,7 @@
                                                 class="block px-4 py-2 text-sm text-green-700 hover:bg-gray-100 ">Edit</a>
                                         </li>
                                         <li>
-                                        
+
                                             <form method="post"
                                                 action="  {{ url('/services/' . $service[0]->id_service) }} ">
                                                 @csrf
@@ -71,7 +71,7 @@
                                                     class="w-full   px-4 py-2 text-sm text-red-600 hover:bg-gray-100 ">
                                                     <span class="flex">Delet</span>
                                                 </button>
-    
+
                                             </form>
                                         </li>
                                     </ul>

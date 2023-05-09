@@ -13,8 +13,8 @@ class AgentService extends Model
     protected $table = 'agent_service';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id_agent',
         'id_service',
+        'id_agent',
     ];
 
     public function service()

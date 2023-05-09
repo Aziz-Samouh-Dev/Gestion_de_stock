@@ -14,7 +14,7 @@
     <link rel="stylesheet"
         href="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/css/main.ad49aa9b.css" />
     {{-- style css --}}
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="{{ url('css/app.css') }}">
 
     {{-- jQuery CDN --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

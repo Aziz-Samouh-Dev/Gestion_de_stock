@@ -9,7 +9,7 @@
                 <div class="flex items-center justify-center mb-5 ">
                     <div class=" w-full p-3 ">
                         <div class=" px-4 ">
-                            <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Ajouter Produit</h1>
+                            <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Ajouter Agent</h1>
                         </div>
                         <form action="{{ url('agents') }}" method="post">
 
@@ -38,24 +38,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="-mx-3 flex flex-wrap">
-                                <div class="w-full px-3 ">
-                                    <div class="mb-5">
-                                        <label for="prenom_agent"
-                                            class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
-                                            service:
-                                        </label>
-                                        <select name="" id=""
-                                            class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-
-                                        @foreach ($agents as $item)
-                                            <option value="{{ $item->services->nom_services }}">{{ $item->services->nom_services }}</option>
-                                        @endforeach
-
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="-mx-3 flex flex-wrap">
                                 <div class="w-full px-3 ">
                                     <div class="mb-5">
