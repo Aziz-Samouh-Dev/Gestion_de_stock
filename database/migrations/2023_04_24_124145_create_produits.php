@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('qte_p');
             $table->integer('qte_d');
             $table->date('date_enter');
-            $table->string('qte_alert')->nullable()->default('disponible');
             $table->timestamps();
         });
 

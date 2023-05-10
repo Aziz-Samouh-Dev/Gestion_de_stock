@@ -16,10 +16,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::with('agents')->get()->groupBy('id_service');
+        $services = Service::orderBy('id_service', 'desc')->with('agents')->get()->groupBy('id_service');
 
 
-        return view('layout.Service.services', compact('services' ));
+        return view('layout.Service.services', compact('services'));
     }
 
 
@@ -77,7 +77,7 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        $service = Service::findOrFail( $id);
+        $service = Service::findOrFail($id);
         $agents = Agent::all();
         return view('layout.Service.edit', compact('service', 'agents'));
     }

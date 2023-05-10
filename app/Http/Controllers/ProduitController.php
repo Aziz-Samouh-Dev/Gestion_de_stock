@@ -13,13 +13,14 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        $produits = Produit::all();
+        
+        $produits = Produit::orderBy('id_produit', 'desc')->get();
         return view('layout.Produit.produits')->with('produits', $produits);
     }
 
     /**
      * Show the form for creating a new resource.
-     */
+    */
     public function create()
     {
         //

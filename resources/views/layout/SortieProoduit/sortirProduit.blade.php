@@ -3,53 +3,53 @@
 @section('title', 'Sortie produit')
 
 @section('content')
-    <div class=" p-4 sm:ml-64 bg-gray-200 min-h-screen">
 
-        {{-- Add service & Agent & Produits --}}
-        <div id="initialView" style="display: block;">
-            <div class="border-2 rounded-lg shadow-lg bg-white ">
-                <div class="relative overflow-x-auto  p-3 grid   ">
-                    {{-- title --}}
-                    <div class=" px-4 mb-4">
-                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Sortir Produit</h1>
-                    </div>
-                    <div class=" flex flex-wrap">
-                        <div class="w-full px-3 grid grid-cols-2 gap-4 ">
-                            <div class="mb-5">
-                                <label for="prenom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
-                                    Nom Service
-                                </label>
-
-
-                                <select id="serviceSelect"
-                                    class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                    <option hidden disabled selected value=""></option>
+    {{-- Add service & Agent & Produits --}}
+    <div id="initialView" style="display: block;">
+        <div class="border-2 rounded-lg shadow-lg bg-white ">
+            <div class="relative overflow-x-auto  p-3 grid   ">
+                {{-- title --}}
+                <div class=" px-4 mb-4">
+                    <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Sortir Produit</h1>
+                </div>
+                <div class=" flex flex-wrap">
+                    <div class="w-full px-3 grid grid-cols-2 gap-4 ">
+                        <div class="mb-5">
+                            <label for="prenom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
+                                Nom Service
+                            </label>
 
 
-                                    @foreach ($services as $item)
-                                        <option value={{ $item->id_service }}>
-                                            {{ $item->nom_service }}
-                                        </option>
-                                    @endforeach
+                            <select id="serviceSelect"
+                                class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                <option hidden disabled selected value=""></option>
 
-                                </select>
 
-                            </div>
-                            <div class="mb-5">
-                                <label for="prenom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
-                                    Nom Agents
-                                </label>
-                                <select id="agent" name="agents"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                    <!-- Options will be dynamically populated based on the selected id_service -->
-                                </select>
+                                @foreach ($services as $item)
+                                    <option value={{ $item->id_service }}>
+                                        {{ $item->nom_service }}
+                                    </option>
+                                @endforeach
 
-                            </div>
+                            </select>
+
+                        </div>
+                        <div class="mb-5">
+                            <label for="prenom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
+                                Nom Agents
+                            </label>
+                            <select id="agent" name="agents"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                <!-- Options will be dynamically populated based on the selected id_service -->
+                            </select>
+
                         </div>
                     </div>
-                    <ul
-                        class="py-3 border h-auto grid grid-cols-2 gap-4 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 lg:grid-cols-3">
-                        @foreach ($produits as $item)
+                </div>
+                <ul
+                    class="py-3 border h-auto grid grid-cols-2 gap-4 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 lg:grid-cols-3">
+                    @foreach ($produits as $item)
+                        @if ($item->qte_p !== 0)
                             <li>
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100">
                                     <input type="checkbox" id="checkbox-item-{{ $item->id_produit }}"
@@ -64,123 +64,153 @@
                                     </label>
                                 </div>
                             </li>
-                        @endforeach
-                    </ul>
-                    <div class="py-3 flex justify-end">
-                        <a href="#">
-                            <button id="dropdownActionButton" onclick="switchViews()"
-                                class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 "
-                                type="button">
-                                <span class="sr-only">Ajouter au tableau </span>
-                                Ajouter au tableau
-                            </button>
-                        </a>
-                    </div>
+                        @endif
+                        <li hidden>
+                            <div class="flex items-center p-2 rounded hover:bg-gray-100">
+                                <input type="checkbox" id="checkbox-item-{{ $item->id_produit }}"
+                                    class="defaultCheckbox relative flex h-[20px] min-h-[20px] w-[20px] min-w-[20px] appearance-none items-center justify-center rounded-md border border-gray-300 text-white/0 outline-none transition duration-[0.2s] checked:text-white hover:cursor-pointer checked:bg-green-600"
+                                    name="weekly" />
+                                <label for="checkbox-item-{{ $item->id_produit }}"
+                                    class="w-full ml-2 text-sm font-medium text-gray-400 rounded">
+                                    {{ $item->nom_p }}
+                                </label>
+                                <label for="checkbox-item-{{ $item->id_produit }}" class=" hidden">
+                                    {{ $item->qte_p }}
+                                </label>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="py-3 flex justify-end">
+                    <a href="#">
+                        <button id="dropdownActionButton" onclick="switchViews()"
+                            class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 "
+                            type="button">
+                            <span class="sr-only">Ajouter au tableau </span>
+                            Ajouter au tableau
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
-        <div id="tableView" style="display: none">
-            <div class="border-2 rounded-lg shadow-lg bg-white my-4 ">
-                <div class="relative overflow-x-auto shadow-md  p-3 ">
-                    <div class=" px-4 ">
-                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">List Produits</h1>
-                    </div>
-                    <table id="dataTable" class="w-full text-sm text-left text-gray-500 border mb-5 bg-dark">
-                        <thead class="text-xs text-gray-100 uppercase bg-gray-500 px-4">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">Name</th>
-                                <th scope="col" class="px-4 py-3">QUANTITé actuiel</th>
-                                <th scope="col" class="px-4 py-3">QUANTITé demandé</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div class=" p-3 flex justify-end">
-                        <a href="#" id="alertButton">
-                            <button onclick="switchViews()"
-                                class="inline-flex items-center
+    </div>
+    <div id="tableView" style="display: none">
+        <div class="border-2 rounded-lg shadow-lg bg-white my-4 ">
+            <div class="relative overflow-x-auto shadow-md  p-3 ">
+                <div class=" px-4 ">
+                    <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">List Produits</h1>
+                </div>
+                <table id="dataTable" class="w-full text-sm text-left text-gray-500 border mb-5 bg-dark">
+                    <thead class="text-xs text-gray-100 uppercase bg-gray-500 px-4">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Name</th>
+                            <th scope="col" class="px-4 py-3">QUANTITé actuiel</th>
+                            <th scope="col" class="px-4 py-3">QUANTITé demandé</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class=" p-3 flex justify-end">
+                    <a href="#" id="alertButton">
+                        <button onclick="switchViews()"
+                            class="inline-flex items-center
                                             text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 "
-                                type="button" id="valider">
-                                <span class="sr-only">Valider </span>
-                                Valider
-                            </button>
-                        </a>
-                    </div>
+                            type="button" id="valider">
+                            <span class="sr-only">Valider </span>
+                            Valider
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
-        <div id="alertContainer" class="w-full flex justify-center" style="display: none;">
-            <div class="w-full flex justify-center">
-                <div id="alert" class="w-full p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50"
-                    role="alert">
+    </div>
+    <div id="alertContainer" class="w-full flex justify-center" style="display: none;">
+        <div class="w-full flex justify-center">
+            <div id="alert" class="w-full p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50"
+                role="alert">
 
-                    <div class="flex items-center justify-center">
-                        <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <h3 class="text-lg font-medium">Le stock est mis à jour avec succès</h3>
-                    </div>
-                    <div class="mt-2 mb-4 text-sm text-center">Télécharger le décharge</div>
-                    <div class="flex justify-center">
-                        <a href="#" id="printPageButton">
-                            <button
-                                class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-2 px-4"
-                                type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                </svg>
-                                <span class="px-2">Télécharger</span>
-                            </button>
-                        </a>
-                    </div>
-
+                <div class="flex items-center justify-center">
+                    <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <h3 class="text-lg font-medium">Télécharger le décharge</h3>
                 </div>
+                <div class="mt-2 mb-4 text-sm text-center">Le stock est mis à jour avec succès</div>
+                <div class="flex justify-center">
+                    <a href="#" id="printPageButton" class="pr-3">
+                        <button
+                            class="inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-2 px-4"
+                            type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                            <span class="px-2">Télécharger</span>
+                        </button>
+                    </a>
+               
+                    <a href="{{ url('sortiProduit') }}">
+                        <button type="button"
+                            class="inline-flex items-center text-blue-100 bg-blue-700 focus:ring-4 font-medium rounded-lg text-sm py-2 px-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 000 12h3" />
+                            </svg>
+                            <span class="px-2 ">
+                                Précédent
+                            </span>
+                        </button>
+                    </a>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <div class=" py-3  min-h-screen hidden">
-            <div class=" bg-white" id="content">
-                <div class=" shadow-lg bg-white">
-                    <div class="flex items-center justify-center mb-5 ">
-                        <div class=" w-full p-3 ">
-                            <div class="flex justify-center">
-                                <img src="images/bigLogo.png" alt="" class="w-48" >
-                            </div>
-                            <div class=" px-4">
-                                <h1 class="text-4xl font-bold antialiased pb-3 pt-6 text-green-600 text-center">
-                                    Demande de décharge
-                                </h1>
-                            </div>
-                            <div class="p-6 bg-white  shadowdark:bg-gray-800 ">
-                                <p class="mb-2"><span class="font-bold pr-2">AGENT </span> <span class="font-bold pr-2"> : </span><span id="agentName"></span></p>
-                                <p class="mb-2"><span class="font-bold pr-2">SERVICE </span><span class="font-bold pr-2"> : </span> <span id="serviceName"></span>
-                                </p>
-                                <p class="mb-4">
-                                    Je soussigné(e), <span id="agentName"></span>, agissant en tant que représentant(e) du
-                                    Département des achats, déclare avoir reçu les produits suivants en sortie de l'entrepôt
-                                    :
-                                </p>
-                                <ul class="list-disc list-inside mb-4" id="productList"></ul>
+    <div class=" py-3  min-h-screen hidden">
+        <div class=" bg-white" id="content">
+            <div class=" shadow-lg bg-white">
+                <div class="flex items-center justify-center mb-5 ">
+                    <div class=" w-full p-3 ">
+                        <div class="flex justify-center">
+                            <img src="images/bigLogo.png" alt="" class="w-48">
+                        </div>
+                        <div class=" px-4">
+                            <h1 class="text-4xl font-bold antialiased pb-3 pt-6 text-green-600 text-center">
+                                Demande de décharge
+                            </h1>
+                        </div>
+                        <div class="p-6 bg-white  shadowdark:bg-gray-800 ">
+                            <p class="mb-2"><span class="font-bold pr-2">AGENT </span> <span class="font-bold pr-2"> :
+                                </span><span id="agentName"></span></p>
+                            <p class="mb-2"><span class="font-bold pr-2">SERVICE </span><span class="font-bold pr-2"> :
+                                </span> <span id="serviceName"></span>
+                            </p>
+                            <p class="mb-4">
+                                Je soussigné(e) , agissant en tant que représentant(e) du
+                                Département des achats, déclare avoir reçu les produits suivants en sortie de l'entrepôt
+                                :
+                            </p>
+                            <ul class="list-disc list-inside mb-4" id="productList"></ul>
 
-                                <p class="mb-4">Je confirme que les produits ont été vérifiés et sont en bon état au
-                                    moment de la sortie de l'entrepôt. Je m'engage également à utiliser ces produits
-                                    conformément aux procédures et aux règles établies par l'entreprise.</p>
-                                <div class="flex justify-end mr-8 pt-7">
-                                    <p class="mt-4">Signature de l'agent :</p>
-                                </div>
+                            <p class="mb-4">Je confirme que les produits ont été vérifiés et sont en bon état au
+                                moment de la sortie de l'entrepôt. Je m'engage également à utiliser ces produits
+                                conformément aux procédures et aux règles établies par l'entreprise.</p>
+                            <div class="flex justify-end mr-8 pt-7">
+                                <p class="mt-4">Signature de l'agent :</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
 
     <script>
         function switchViews() {
@@ -357,10 +387,10 @@
                 var productList = document.getElementById('productList');
                 var li = document.createElement('li');
                 li.setAttribute('data-product-id', addedProduct);
-                li.textContent = `${qte_dValue} boîtes de ${productName}`;
+                li.textContent = `${qte_dValue} Piece(s) de ${productName}`;
 
                 productList.appendChild(li);
-                
+
             }
         });
     </script>

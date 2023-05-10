@@ -12,16 +12,10 @@ class AgentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $services = Service::all()->with('services');
-    //     $agents = Agent::all();
-    //     return view('layout.Agent.agents', compact('agents', 'services'));
-    // }
 
     public function index()
     {
-        $agents = Agent::all();
+        $agents = Agent::orderBy('id_agent', 'desc')->get();
         return view('layout.Agent.agents', compact('agents'));
     }
 

@@ -12,7 +12,7 @@ class etat_de_stockController extends Controller
     public function index()
     {
         //
-        $produits = Produit::all();
+        $produits = Produit::orderBy('id_produit', 'desc')->get();
         return view('layout.etatStock.etatDeStock')->with('produits', $produits);; 
     }
 }

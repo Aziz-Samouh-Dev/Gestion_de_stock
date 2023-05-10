@@ -3,7 +3,6 @@
 @section('title', 'View Service')
 
 @section('content')
-    <div class="p-4 sm:ml-64 bg-gray-200 min-h-screen">
         <div class="border-2 rounded-lg shadow-lg bg-white">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-3">
                 <div class="flex items-center justify-center mb-5 ">
@@ -75,6 +74,4 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
 @endsection

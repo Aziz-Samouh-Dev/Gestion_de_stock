@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Produit;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\sortirProduit;
 use App\Http\Controllers\AuthController;
@@ -21,27 +19,13 @@ use App\Http\Controllers\etat_de_stockController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('inscription');
-// });
-
-// Route::resource('/produits', ProduitController::class);
-
-// Route::resource('/agents', AgentController::class);
-
-// Route::resource('/services', ServiceController::class);
-// Route::patch('/services/{id}', [ServiceController::class, 'update'])->name('services.update');
-
-
-// Route::resource('/sortiProduit', sortirProduit::class);
-// Route::get('/getAgents', [sortirProduit::class, "getAgents"]);
-// Route::post('/updateProduct', [sortirProduit::class, 'update']);
-
-// Route::resource('/etatS', etat_de_stockController::class);
-
+Route::get('/', function () {
+    return view('login');
+});
 
 
 Route::group(['middleware' => 'guest'], function () {
+
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
 });
