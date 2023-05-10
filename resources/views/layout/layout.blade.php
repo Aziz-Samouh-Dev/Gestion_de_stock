@@ -31,7 +31,7 @@
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
             <a href="{{ url('produits') }}" class="flex items-center justify-center mb-3">
                 <div class="p-2">
-                    <img src="/images/smallLogo.svg" alt="logo"  class="w-14 md:w-20">
+                    <img src="/images/smallLogo.svg" alt="logo" class="w-14 md:w-20">
                 </div>
             </a>
             <ul class="space-y-2 font-medium">
@@ -94,15 +94,20 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/') }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                        </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
-                    </a>
+                    <form action="{{ url('logout') }}" method="POST" class="flex" role="search">
+                        @csrf
+                        @method('DELETE')
+                        <button
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
