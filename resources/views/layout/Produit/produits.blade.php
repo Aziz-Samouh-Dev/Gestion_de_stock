@@ -145,6 +145,7 @@
 
                     </tbody>
                 </table>
+                {{ $produits->links() }}
             </div>
 
 

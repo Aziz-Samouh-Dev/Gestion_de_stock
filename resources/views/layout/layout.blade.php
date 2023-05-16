@@ -112,7 +112,7 @@
         </div>
     </aside>
 
-    <div class="p-4 sm:ml-64 min-h-screen  " style="background-image: url('/images/bg.jpeg');">
+    <div class="p-4 sm:ml-64 min-h-screen " style="background-image: url('/images/bg.jpeg');">
         @yield('content')
     </div>
 

@@ -17,6 +17,9 @@
                                     </label>
                                     <input type="text" name="nom_p" id="nom_p" placeholder="Nom"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('nom_p')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -38,6 +41,9 @@
                                     </label>
                                     <input type="text" name="libelle_p" id="libelle_p" placeholder="Libelle"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('libelle_p')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -50,6 +56,9 @@
                                     <input type="number" min="1" name="qte_p" id="qte_p"
                                         placeholder="Quantité"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('qte_p')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="w-full px-3 md:w-1/2">
@@ -59,6 +68,9 @@
                                     </label>
                                     <input type="date" name="date_enter" id="date_enter"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('date_enter')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

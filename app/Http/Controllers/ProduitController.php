@@ -14,7 +14,7 @@ class ProduitController extends Controller
     public function index()
     {
         
-        $produits = Produit::orderBy('id_produit', 'desc')->get();
+        $produits = Produit::orderBy('id_produit', 'desc')->paginate(8);
         return view('layout.Produit.produits')->with('produits', $produits);
     }
 
@@ -52,7 +52,6 @@ class ProduitController extends Controller
         $produit->qte_p = $validated['qte_p'];
         $produit->qte_d = $validated['qte_p'];
         $produit->date_enter = $validated['date_enter'];
-        $produit->qte_alert = 'disponible';
 
         // save the product to the database
         $produit->save();

@@ -23,6 +23,9 @@
                                     <input type="text" name="nom_p" id="nom_p" placeholder="Name"
                                         value="{{ $produits->nom_p }}"
                                         class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('nom_p')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -35,6 +38,9 @@
                                     <input type="text" name="libelle_p" id="libelle_p" placeholder="Libelle"
                                         value="{{ $produits->libelle_p }}"
                                         class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('libelle_p')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -47,6 +53,9 @@
                                     <input type="number" min="1" name="qte_p" id="qte_p"
                                         placeholder="Quantité" value="{{ $produits->qte_p }}"
                                         class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('qte_p')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="w-full px-3 md:w-1/2">
@@ -57,6 +66,9 @@
                                     <input type="date" name="date_enter" id="date_enter"
                                         value="{{ $produits->date_enter }}"
                                         class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    @error('date_enter')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

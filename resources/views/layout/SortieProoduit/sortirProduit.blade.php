@@ -15,7 +15,7 @@
                 <div class=" flex flex-wrap">
                     <div class="w-full px-3 grid grid-cols-2 gap-4 ">
                         <div class="mb-5">
-                            <label for="prenom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
+                            <label for="nom_service" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
                                 Nom Service
                             </label>
 
@@ -33,6 +33,10 @@
 
                             </select>
 
+                            @error('nom_service')
+                                <div class="text-red-700">{{ $message }}</div>
+                            @enderror
+
                         </div>
                         <div class="mb-5">
                             <label for="prenom_agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
@@ -42,6 +46,10 @@
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                                 <!-- Options will be dynamically populated based on the selected id_service -->
                             </select>
+
+                            @error('prenom_agent')
+                                <div class="text-red-700">{{ $message }}</div>
+                            @enderror
 
                         </div>
                     </div>
@@ -152,7 +160,7 @@
                             <span class="px-2">Télécharger</span>
                         </button>
                     </a>
-               
+
                     <a href="{{ url('sortiProduit') }}">
                         <button type="button"
                             class="inline-flex items-center text-blue-100 bg-blue-700 focus:ring-4 font-medium rounded-lg text-sm py-2 px-4">
@@ -227,6 +235,8 @@
                 alertContainer.style.display = 'block';
             }
         }
+
+        
 
         var addedProducts = []; // Array to store added product IDs
         var addedQts = []; // Array to store added product IDs

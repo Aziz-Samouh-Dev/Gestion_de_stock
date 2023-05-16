@@ -20,6 +20,9 @@
                                     <input type="text" name="nom_service" id="nom_service" placeholder="Name"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         value="{{ $service->nom_service }}" />
+                                    @error('nom_service')
+                                        <div class="text-red-700">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
