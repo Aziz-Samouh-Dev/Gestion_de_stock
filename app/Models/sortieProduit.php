@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class sortieProduit extends Model
+class SortieProduit extends Model
 {
     public function produits()
     {

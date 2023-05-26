@@ -16,9 +16,9 @@ class sortirProduit extends Controller
     public function index()
     {
 
-        $produits = Produit::all() ;
+        $produits = Produit::all();
         $services = Service::all();
-        return view('layout.SortieProoduit.sortirProduit', compact('services' , 'produits'));
+        return view('layout.SortieProoduit.sortirProduit', compact('services', 'produits'));
     }
 
 
@@ -60,7 +60,7 @@ class sortirProduit extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-  
+
 
     /**
      * Update the specified resource in storage.

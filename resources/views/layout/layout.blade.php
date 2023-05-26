@@ -19,6 +19,9 @@
     {{-- jQuery CDN --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+    {{-- Script EXL --}}
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
     <title>App - @yield('title')</title>
 
 </head>

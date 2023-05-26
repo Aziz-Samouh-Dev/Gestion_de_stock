@@ -1,0 +1,45 @@
+i want create form 3 parts :
+
+part 1:
+    i have 3 table :
+        service table :
+            Schema::create('services', function (Blueprint $table) {
+                $table->increments('id_service');
+                $table->string('nom_service');
+                $table->timestamps();
+            });
+        and agent table :
+            Schema::create('agents', function (Blueprint $table) {
+                $table->increments("id_agent");
+                $table->string("nom_agent");
+                $table->string("prenom_agent");
+                $table->string("grade_agent");
+                $table->timestamps();
+            });
+        and produit table :
+            Schema::create('produits', function (Blueprint $table) {
+                $table->increments('id_produit');
+                $table->string('nom_p');
+                $table->string('ref_p')->unique();
+                $table->string('libelle_p');
+                $table->integer('qte_p');
+                $table->integer('qte_d');
+                $table->date('date_enter');
+                $table->timestamps();
+            });
+        , service and agent  : 
+            Schema::create('agent_service', function (Blueprint $table) {
+                $table->id();
+                $table-> unsignedInteger('id_agent')->nullable();
+                $table->unsignedInteger('id_service')->nullable();
+                $table->timestamps();
+
+                $table->foreign('id_agent')->references('id_agent')->on('agents')->onDelete('cascade');
+                $table->foreign('id_service')->references('id_service')->on('services')->onDelete('cascade');
+            });
+
+
+    i want in this part 3 step :
+            step 1 : select service use foreach  get from database .
+            step 2 : show all agent from service table and show in select use foreach get from database .
+            step 3 : if i select service and agent show list chekbox for  all produit use for get from data .

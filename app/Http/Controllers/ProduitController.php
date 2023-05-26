@@ -124,6 +124,6 @@ class ProduitController extends Controller
     {
         //
         Produit::where('id_produit', $id)->delete();
-        return redirect('produits')->with('lash_message', 'produits deleted!');
+        return redirect('produits')->with('flash_message', 'produits deleted!');
     }
 }

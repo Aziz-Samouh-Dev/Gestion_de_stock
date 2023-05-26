@@ -91,12 +91,22 @@
                                 </td>
 
                                 @if ($item->qte_p === 0)
-                                    <td class="px-4 py-3 text-red-700">
-                                        Épuisé
+                                    <td class="flex px-4 py-3 text-red-700">
+                                        <h5 class="px-3 py-2 bg-red-600 text-white rounded-full ">
+                                            Épuisé
+                                        </h5>
+                                    </td>
+                                @elseif ($item->qte_p < 5)
+                                    <td class="flex px-4 py-3 text-yellow-700">
+                                        <h5 class="px-3 py-2 bg-yellow-600 text-white rounded-full ">
+                                            Qte limité
+                                        </h5>
                                     </td>
                                 @else
-                                    <td class="px-4 py-3 text-green-700">
-                                        disponible
+                                    <td class="flex px-4 py-3 text-green-700">
+                                        <h5 class="px-3 py-2 bg-green-600 text-white rounded-full ">
+                                            Disponible
+                                        </h5>
                                     </td>
                                 @endif
                                 <td class="px-4 py-3">

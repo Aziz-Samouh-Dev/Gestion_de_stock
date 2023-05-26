@@ -47,4 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/etatS', etat_de_stockController::class);
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
 });

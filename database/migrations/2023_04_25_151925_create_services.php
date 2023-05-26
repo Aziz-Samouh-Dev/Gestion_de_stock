@@ -16,7 +16,6 @@ return new class extends Migration
             $table->increments('id_service');
             $table->string('nom_service');
             $table->timestamps();
-
         });
     }
 
