@@ -9,14 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('agent_service', function (Blueprint $table) {
+        Schema::create('division_service', function (Blueprint $table) {
+
             $table->increments('id');
-            $table->unsignedInteger('id_agent')->nullable();
+            $table->unsignedInteger('id_division')->nullable();
             $table->unsignedInteger('id_service')->nullable();
-            
-            $table->foreign('id_agent')->references('id_agent')->on('agents')->onDelete('cascade');
+
+            $table->foreign('id_division')->references('id_division')->on('divisions')->onDelete('cascade');
             $table->foreign('id_service')->references('id_service')->on('services')->onDelete('cascade');
             $table->timestamps();
         });
@@ -27,6 +28,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agent_service');
+        Schema::dropIfExists('division_service');
     }
+
+
+
 };

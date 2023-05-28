@@ -1,45 +1,347 @@
 i want create form 3 parts :
 
 part 1:
-    i have 3 table :
-        service table :
-            Schema::create('services', function (Blueprint $table) {
-                $table->increments('id_service');
-                $table->string('nom_service');
-                $table->timestamps();
-            });
-        and agent table :
-            Schema::create('agents', function (Blueprint $table) {
-                $table->increments("id_agent");
-                $table->string("nom_agent");
-                $table->string("prenom_agent");
-                $table->string("grade_agent");
-                $table->timestamps();
-            });
-        and produit table :
-            Schema::create('produits', function (Blueprint $table) {
-                $table->increments('id_produit');
-                $table->string('nom_p');
-                $table->string('ref_p')->unique();
-                $table->string('libelle_p');
-                $table->integer('qte_p');
-                $table->integer('qte_d');
-                $table->date('date_enter');
-                $table->timestamps();
-            });
-        , service and agent  : 
-            Schema::create('agent_service', function (Blueprint $table) {
-                $table->id();
-                $table-> unsignedInteger('id_agent')->nullable();
-                $table->unsignedInteger('id_service')->nullable();
-                $table->timestamps();
+i have 3 table :
+service table :
+Schema::create('services', function (Blueprint $table) {
+$table->increments('id_service');
+$table->string('nom_service');
+$table->timestamps();
+});
+and agent table :
+Schema::create('agents', function (Blueprint $table) {
+$table->increments("id_agent");
+$table->string("nom_agent");
+$table->string("prenom_agent");
+$table->string("grade_agent");
+$table->timestamps();
+});
+and produit table :
+Schema::create('produits', function (Blueprint $table) {
+$table->increments('id_produit');
+$table->string('nom_p');
+$table->string('ref_p')->unique();
+$table->string('libelle_p');
+$table->integer('qte_p');
+$table->integer('qte_d');
+$table->date('date_enter');
+$table->timestamps();
+});
+, service and agent :
+Schema::create('agent_service', function (Blueprint $table) {
+$table->id();
+$table-> unsignedInteger('id_agent')->nullable();
+$table->unsignedInteger('id_service')->nullable();
+$table->timestamps();
 
-                $table->foreign('id_agent')->references('id_agent')->on('agents')->onDelete('cascade');
-                $table->foreign('id_service')->references('id_service')->on('services')->onDelete('cascade');
+$table->foreign('id_agent')->references('id_agent')->on('agents')->onDelete('cascade');
+$table->foreign('id_service')->references('id_service')->on('services')->onDelete('cascade');
+});
+
+
+i want in this part 3 step :
+step 1 : select service use foreach get from database .
+step 2 : show all agent from service table and show in select use foreach get from database .
+step 3 : if i select service and agent show list chekbox for all produit use for get from data .
+
+
+@extends('layout.layout')
+
+@section('title', 'Sortie produit')
+
+@section('content')
+<div>
+    <h1>Sortie produit</h1>
+    <form id="sortieForm">
+        <div>
+            <label for="division">Division:</label>
+            <select id="division" name="division">
+                @foreach ($divisions as $division)
+                <option value="{{ $division->id_division }}">{{ $division->lable }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label for="service">Service:</label>
+            <select id="service" name="service">
+                <!-- Service options will be dynamically populated -->
+            </select>
+        </div>
+        <div>
+            <label for="agent">Agent:</label>
+            <select id="agent" name="agent" disabled></select>
+        </div>
+        <div>
+            <h3>Produits:</h3>
+            <ul>
+                @foreach ($produits as $produit)
+                <li>
+                    <input type="checkbox" name="produits[]" value="{{ $produit->id_produit }}">
+                    {{ $produit->nom_p }}
+                </li>
+                @endforeach
+            </ul>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="tableView" style="display: none;">
+    <h2>Selected produits:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+    <button id="generatePdf">Generate PDF</button>
+</div>
+
+<div id="alertContainer" style="display: none;">
+    <div id="alertMessage"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#division').on('change', function() {
+            var divisionId = $(this).val();
+            if (divisionId !== '') {
+                $.ajax({
+                    url: '{{ route('
+                    getServices ') }}',
+                    type: 'GET',
+                    data: {
+                        division_id: divisionId
+                    },
+                    success: function(data) {
+                        var serviceSelect = $('#service');
+                        serviceSelect.empty().prop('disabled', false);
+                        $.each(data, function(key, value) {
+                            serviceSelect.append($('<option></option>').attr('value', value.id_service).text(value.nom_service));
+                        });
+                        $('#agent').empty().prop('disabled', true);
+                    }
+                });
+            } else {
+                $('#service').empty().prop('disabled', true);
+                $('#agent').empty().prop('disabled', true);
+            }
+        });
+
+        $('#service').on('change', function() {
+            var serviceId = $(this).val();
+            if (serviceId !== '') {
+                $.ajax({
+                    url: '{{ route('
+                    getAgents ') }}',
+                    type: 'GET',
+                    data: {
+                        service_id: serviceId
+                    },
+                    success: function(data) {
+                        var agentSelect = $('#agent');
+                        agentSelect.empty().prop('disabled', false);
+                        $.each(data, function(key, value) {
+                            agentSelect.append($('<option></option>').attr('value', value.id_agent).text(value.nom_agent));
+                        });
+                    }
+                });
+            } else {
+                $('#agent').empty().prop('disabled', true);
+            }
+        });
+
+        $('#sortieForm').on('submit', function(e) {
+            e.preventDefault();
+            var selectedProduits = $('input[name="produits[]"]:checked').map(function() {
+                return this.value;
+            }).get();
+
+            if (selectedProduits.length === 0) {
+                showAlert('Please select at least one produit.');
+                return;
+            }
+
+            var tableBody = $('#tableBody');
+            tableBody.empty();
+
+            $.each(selectedProduits, function(key, produitId) {
+                var produit = getProduitById(produitId);
+                if (produit) {
+                    tableBody.append($('<tr></tr>').append($('<td></td>').text(produit.nom_p)).append($('<td></td>').text(produit.qte_p)));
+                }
             });
 
+            $('#tableView').show();
+        });
 
-    i want in this part 3 step :
-            step 1 : select service use foreach  get from database .
-            step 2 : show all agent from service table and show in select use foreach get from database .
-            step 3 : if i select service and agent show list chekbox for  all produit use for get from data .
+        function showAlert(message) {
+            $('#alertMessage').text(message);
+            $('#alertContainer').show();
+        }
+    });
+</script>
+@endsection
+
+
+
+
+    <script>
+        var addedProducts = []; // Array to store added product IDs
+        var addedQts = []; // Array to store added product IDs
+        function isProductAdded(productId) {
+            return addedProducts.includes(productId);
+        }
+        function addProduct(productId) {
+            if (isProductAdded(productId)) {
+                console.log('Product is already added');
+            } else {
+                // Add the product to the table
+                console.log('Adding product to the table');
+                addedProducts.push(productId);
+            }
+        }
+        document.getElementById('dropdownActionButton').addEventListener('click', function() {
+            var checkboxes = document.querySelectorAll('input[name="weekly"]:checked');
+
+            checkboxes.forEach(function(checkbox) {
+                var productId = checkbox.id.replace('checkbox-item-', '');
+                var productName = checkbox.nextElementSibling.innerText;
+                var quantityLabel = checkbox.nextElementSibling.nextElementSibling.innerText;
+                var maxQuantity = parseInt(quantityLabel);
+                if (isProductAdded(productId)) {
+                    var existingRow = document.querySelector(
+                        `#dataTable tbody tr[data-product-id="${productId}"]`);
+                    existingRow.parentNode.removeChild(existingRow);
+                    addedProducts.splice(addedProducts.indexOf(productId), 1);
+                } else {
+                    var row = document.createElement('tr');
+                    row.setAttribute('data-product-id', productId);
+                    row.innerHTML = `
+                        <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                            <div class="text-base font-semibold">${productName}</div>
+                        </td>
+                        <td class="px-4 py-3">
+                            ${quantityLabel}
+                        </td>
+                        <td class="px-4 py-3 flex items-center">
+                            <input max="${maxQuantity}" id="qte_d" type="number" min="0"
+                                class="w-24 p-2 border contrast-more:border-slate-400" />
+                        </td>
+                    `;
+
+                    var tableBody = document.querySelector('#dataTable tbody');
+                    tableBody.appendChild(row);
+
+                    addedProducts.push(productId);
+                }
+            });
+
+            // Check if any checkboxes are checked
+            var isAnyCheckboxChecked = checkboxes.length > 0;
+
+            // Show alert if no checkboxes are checked
+            if (!isAnyCheckboxChecked) {
+                event.preventDefault();
+                alert("Vous devez remplir les informations.");
+                document.getElementById('tableView').style.display = 'none';
+                document.querySelector('.pageini').style.display = 'block';
+            } else {
+                document.getElementById('tableView').style.display = 'block';
+                document.querySelector('.pageini').style.display = 'none';
+            }
+        });
+        document.getElementById('valider').addEventListener('click', function() {
+            // Iterate through the added products
+            for (var i = 0; i < addedProducts.length; i++) {
+                var addedProduct = addedProducts[i];
+                var xhr = new XMLHttpRequest(); //
+                Retrieve the value of the input field
+                var qte_dInputs = document.querySelectorAll('input[id="qte_d"]');
+                var
+                    qte_dValue;
+                for (var j = 0; j < qte_dInputs.length; j++) {
+                    if (qte_dInputs[j].closest('tr').getAttribute('data-product-id') === addedProduct) {
+                        qte_dValue = qte_dInputs[j].value;
+                        break;
+                    }
+                }
+                console.log(qte_dValue); // Get the maximum quantity for the current product var
+                maxQuantity = parseInt(qte_dInputs[j].getAttribute('max'));
+                if (parseInt(qte_dValue) > maxQuantity) {
+                    alert('La Quantité demendé dépasse la quantité disponible.');
+                    document.getElementById('alertContainer').style.display = 'none';
+                    document.getElementById('tableView').style.display = 'block';
+                    return; // Abort further processing if quantity exceeds the limit
+                }
+                if (parseInt(qte_dValue) === 0) {
+                    // Show the div "tableView"
+
+                    alert("la case QTE demendé n'est pas accepter la valeur 0");
+
+                    document.getElementById('alertContainer').style.display = 'none';
+                    document.getElementById('tableView').style.display = 'block';
+                    return; // Stop further processing
+                }
+                if (qte_dValue === '') {
+                    // Show the div "tableView"
+                    alert('vous devez remplire la case QTE demendé ');
+
+
+                    document.getElementById('alertContainer').style.display = 'none';
+                    document.getElementById('tableView').style.display = 'block';
+                    return; // Stop further processing
+                }
+                // Set the request URL and method
+                xhr.open('POST', '/updateProduct', true);
+
+                // Set the request headers (if needed)
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+                // Set the request payload
+                var payload = JSON.stringify({
+                    id: addedProduct,
+                    quantity: qte_dValue
+                });
+
+                // Handle the response
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Handle the successful response
+                        } else {
+                            // Handle the error response
+                            alert('Failed to update product');
+                        }
+                    }
+                };
+
+                // Send the request
+                xhr.send(payload);
+
+                // Add the product to the product list
+                var productName;
+                var checkboxes = document.querySelectorAll('input[name="weekly"]:checked');
+                checkboxes.forEach(function(checkbox) {
+                    var productId = checkbox.id.replace('checkbox-item-', '');
+                    if (productId === addedProduct) {
+                        productName = checkbox.nextElementSibling.innerText;
+                        return;
+                    }
+                });
+
+                var productList = document.getElementById('productList');
+                var li = document.createElement('li');
+                li.setAttribute('data-product-id', addedProduct);
+                li.textContent = `${qte_dValue} Piece(s) de ${productName}`;
+
+                productList.appendChild(li);
+
+            }
+        });
+    </script>

@@ -1,44 +1,78 @@
+
 @extends('layout.layout')
+
 @section('title', 'Sortie produit')
+
 @section('content')
+
+    {{-- Add service & Agent & Produits --}}
     <div class="pageini" id="initialView" style="display: block;">
         <div class="border-2 rounded-lg shadow-lg bg-white ">
             <div class="relative overflow-x-auto  p-3 grid   ">
-
+                {{-- title --}}
                 <div class=" px-4 mb-4">
                     <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Sortir Produit</h1>
                 </div>
                 <div class=" flex flex-wrap">
-                    <div class="w-full px-3 grid grid-cols-3 gap-4 ">
+                    <div class="w-full px-3 grid grid-cols-2 gap-4 ">
                         <div class="mb-5">
                             <label for="division" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
                                 Nom Division
                             </label>
-                            <select id="division" name="division"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                <option hidden selected disabled value=""></option>
-                                @foreach ($divisions as $division)
-                                    <option value="{{ $division->id_division }}">{{ $division->lable }}</option>
-                                @endforeach
+
+
+                            <select id="divisionSelect"
+                                class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                <option hidden disabled selected value=""></option>
+
+                <select id="division" name="division" >
+                    @foreach ($divisions as $division)
+                        <option value="{{ $division->id_division }}">{{ $division->lable }}</option>
+                    @endforeach
+                </select>
+
                             </select>
+
+                            @error('division')
+                                <div class="text-red-700">{{ $message }}</div>
+                            @enderror
+
                         </div>
                         <div class="mb-5">
-                            <label for="service" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
+                            <label for="nom_service" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
                                 Nom Service
                             </label>
-                            <select id="service" name="service"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                <option hidden selected disabled value=""></option>
+
+
+                <select
+                                class="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                 id="service" name="service" class="border rounded p-2" disabled></select>
+
+
+                           
+
                             </select>
+
+                            @error('service')
+                                <div class="text-red-700">{{ $message }}</div>
+                            @enderror
+
                         </div>
                         <div class="mb-5">
                             <label for="agent" class="pl-3 mb-3 block text-base font-medium text-[#07074D]">
                                 Nom Agents
                             </label>
-                            <select id="agent" name="agent"
+
+
+                                            <select 
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                <option hidden selected disabled value=""></option>
-                            </select>
+                                            id="agent" name="agent" class="border rounded p-2" disabled></select>
+
+
+                            @error('prenom_agent')
+                                <div class="text-red-700">{{ $message }}</div>
+                            @enderror
+
                         </div>
                     </div>
                 </div>
@@ -182,13 +216,11 @@
                             </h1>
                         </div>
                         <div class="p-6 bg-white  shadowdark:bg-gray-800 ">
-                            <p class="mb-2"><span class="font-bold pr-2">Division </span> <span class="font-bold pr-2"> :
-                            </span><span id="divisionName"></span></p>
+                            <p class="mb-2"><span class="font-bold pr-2">AGENT </span> <span class="font-bold pr-2"> :
+                                </span><span id="agentName"></span></p>
                             <p class="mb-2"><span class="font-bold pr-2">SERVICE </span><span class="font-bold pr-2"> :
                                 </span> <span id="serviceName"></span>
                             </p>
-                            <p class="mb-2"><span class="font-bold pr-2">AGENT </span> <span class="font-bold pr-2"> :
-                                </span><span id="agentName"></span></p>
                             <p class="mb-4">
                                 Je soussigné(e) , agissant en tant que représentant(e) du
                                 Département des achats, déclare avoir reçu les produits suivants en sortie de l'entrepôt
@@ -216,100 +248,94 @@
             const tableView = document.getElementById('tableView');
             const alertContainer = document.getElementById('alertContainer');
             if (initialView.style.display === 'block') {
+                // Switch from initial view to table view
                 initialView.style.display = 'none';
                 tableView.style.display = 'block';
             } else if (tableView.style.display === 'block') {
+                // Switch from table view to alert view
                 tableView.style.display = 'none';
                 alertContainer.style.display = 'block';
             }
         }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#division').prepend($('<option></option>').attr('selected', 'selected').text('Select...').addClass('hidden'));
-            $('#division').on('change', function() {
-                var divisionId = $(this).val();
-                if (divisionId !== '') {
-                    $.ajax({
-                        url: '{{ route('getServices') }}',
-                        type: 'GET',
-                        data: {
-                            division_id: divisionId
-                        },
-                        success: function(data) {
-                            var serviceSelect = $('#service');
-                            serviceSelect.empty().prop('disabled', false);
-                            serviceSelect.append($('<option></option>').attr('selected',
-                                'selected').text('Select...').addClass('hidden'));
-                            $.each(data, function(key, value) {
-                                serviceSelect.append($('<option></option>').attr(
-                                    'value', value.id_service).text(value
-                                    .nom_service));
-                            });
-                            $('#agent').empty().prop('disabled', true);
-                        }
-                    });
-                } else {
-                    $('#service').empty().prop('disabled', true);
-                    $('#agent').empty().prop('disabled', true);
-                }
-                var divisionName = this.selectedOptions[0].text;
-                document.getElementById('divisionName').innerText = divisionName;
-            });
-            $('#service').on('change', function() {
-                var serviceId = $(this).val();
-                if (serviceId !== '') {
-                    $.ajax({
-                        url: '{{ route('getAgents') }}',
-                        type: 'GET',
-                        data: {
-                            service_id: serviceId
-                        },
-                        success: function(data) {
-                            var agentSelect = $('#agent');
-                            agentSelect.empty().prop('disabled', false);
-                            agentSelect.append($('<option></option>').attr('selected',
-                                'selected').text('Select...').addClass('hidden'));
-                            $.each(data, function(key, value) {
-                                agentSelect.append($('<option></option>').attr('value',
-                                    value.id_agent).text(value.nom_agent));
-                            });
-                        }
-                    });
-                } else {
-                    $('#agent').empty().prop('disabled', true);
-                }
+
+
+        document.getElementById('serviceSelect').addEventListener('change', function() {
+            var serviceId = this.value; // Get the selected service ID
+
+            // Clear the agents select options
+            document.getElementById('agent').innerHTML = '';
+
+            if (serviceId) {
+                // Make an AJAX request to retrieve agents for the selected service
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/getAgents?service_id=' + serviceId, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // Process the response
+                        var agents = JSON.parse(xhr.responseText);
+                        // Update the UI with the retrieved agents
+                        agents.forEach(function(agent) {
+                            var option = document.createElement('option');
+                            option.value = agent.id_agent;
+                            option.text = agent.nom_agent + ' ' + agent.prenom_agent;
+                            document.getElementById('agent').appendChild(option);
+                        });
+                        // Update the agent name based on the selected agent
+                        updateAgentName();
+                    }
+                };
+                xhr.send();
+
+                // Update the service name
                 var serviceName = this.selectedOptions[0].text;
                 document.getElementById('serviceName').innerText = serviceName;
-            });
-            function showAlert(message) {
-                $('#alertMessage').text(message);
-                $('#alertContainer').show();
             }
         });
-    </script>
-    <script>
-        var addedProducts = []; 
-        var addedQts = []; 
+
+        document.getElementById('agent').addEventListener('change', function() {
+            // Update the agent name based on the selected agent
+            updateAgentName();
+        });
+
+        function updateAgentName() {
+            var agentSelect = document.getElementById('agent');
+            var selectedAgent = agentSelect.options[agentSelect.selectedIndex].text;
+            document.getElementById('agentName').innerText = selectedAgent;
+        }
+
+
+        var addedProducts = []; // Array to store added product IDs
+        var addedQts = []; // Array to store added product IDs
+
         function isProductAdded(productId) {
             return addedProducts.includes(productId);
         }
+
         function addProduct(productId) {
             if (isProductAdded(productId)) {
                 console.log('Product is already added');
             } else {
+                // Add the product to the table
                 console.log('Adding product to the table');
                 addedProducts.push(productId);
             }
         }
+
+
         document.getElementById('dropdownActionButton').addEventListener('click', function() {
             var checkboxes = document.querySelectorAll('input[name="weekly"]:checked');
+
             checkboxes.forEach(function(checkbox) {
                 var productId = checkbox.id.replace('checkbox-item-', '');
                 var productName = checkbox.nextElementSibling.innerText;
                 var quantityLabel = checkbox.nextElementSibling.nextElementSibling.innerText;
                 var maxQuantity = parseInt(quantityLabel);
+
+
+
+
+
+
                 if (isProductAdded(productId)) {
                     var existingRow = document.querySelector(
                         `#dataTable tbody tr[data-product-id="${productId}"]`);
@@ -319,22 +345,28 @@
                     var row = document.createElement('tr');
                     row.setAttribute('data-product-id', productId);
                     row.innerHTML = `
-                        <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
-                            <div class="text-base font-semibold">${productName}</div>
-                        </td>
-                        <td class="px-4 py-3">
-                            ${quantityLabel}
-                        </td>
-                        <td class="px-4 py-3 flex items-center">
-                            <input max="${maxQuantity}" id="qte_d" type="number" min="0" class="w-24 p-2 border contrast-more:border-slate-400" />
-                        </td>
-                    `;
+                <td class="px-6 py-4 text-gray-900 whitespace-nowrap">
+                    <div class="text-base font-semibold">${productName}</div>
+                </td>
+                <td class="px-4 py-3">
+                    ${quantityLabel}
+                </td>
+                <td class="px-4 py-3 flex items-center">
+                    <input max="${maxQuantity}" id="qte_d" type="number" min="0" class="w-24 p-2 border contrast-more:border-slate-400" />
+                </td>
+            `;
+
                     var tableBody = document.querySelector('#dataTable tbody');
                     tableBody.appendChild(row);
+
                     addedProducts.push(productId);
                 }
             });
+
+            // Check if any checkboxes are checked
             var isAnyCheckboxChecked = checkboxes.length > 0;
+
+            // Show alert if no checkboxes are checked
             if (!isAnyCheckboxChecked) {
                 event.preventDefault();
                 alert("Vous devez remplir les informations.");
@@ -345,10 +377,15 @@
                 document.querySelector('.pageini').style.display = 'none';
             }
         });
+
+
         document.getElementById('valider').addEventListener('click', function() {
+            // Iterate through the added products
             for (var i = 0; i < addedProducts.length; i++) {
                 var addedProduct = addedProducts[i];
                 var xhr = new XMLHttpRequest();
+
+                // Retrieve the value of the input field
                 var qte_dInputs = document.querySelectorAll('input[id="qte_d"]');
                 var qte_dValue;
                 for (var j = 0; j < qte_dInputs.length; j++) {
@@ -358,40 +395,63 @@
                     }
                 }
                 console.log(qte_dValue);
+
+                // Get the maximum quantity for the current product
                 var maxQuantity = parseInt(qte_dInputs[j].getAttribute('max'));
+
                 if (parseInt(qte_dValue) > maxQuantity) {
                     alert('La Quantité demendé dépasse la quantité disponible.');
                     document.getElementById('alertContainer').style.display = 'none';
                     document.getElementById('tableView').style.display = 'block';
-                    return; 
+                    return; // Abort further processing if quantity exceeds the limit
                 }
                 if (parseInt(qte_dValue) === 0) {
+                    // Show the div "tableView"
+
                     alert("la case QTE demendé n'est pas accepter la valeur 0");
+
                     document.getElementById('alertContainer').style.display = 'none';
                     document.getElementById('tableView').style.display = 'block';
+                    return; // Stop further processing
                 }
                 if (qte_dValue === '') {
+                    // Show the div "tableView"
                     alert('vous devez remplire la case QTE demendé ');
+
+
                     document.getElementById('alertContainer').style.display = 'none';
                     document.getElementById('tableView').style.display = 'block';
-                    return;
+                    return; // Stop further processing
                 }
+                // Set the request URL and method
                 xhr.open('POST', '/updateProduct', true);
+
+                // Set the request headers (if needed)
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+                // Set the request payload
                 var payload = JSON.stringify({
                     id: addedProduct,
                     quantity: qte_dValue
                 });
+
+                // Handle the response
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
+                            // Handle the successful response
                         } else {
+                            // Handle the error response
                             alert('Failed to update product');
                         }
                     }
                 };
+
+                // Send the request
                 xhr.send(payload);
+
+                // Add the product to the product list
                 var productName;
                 var checkboxes = document.querySelectorAll('input[name="weekly"]:checked');
                 checkboxes.forEach(function(checkbox) {
@@ -401,26 +461,25 @@
                         return;
                     }
                 });
+
                 var productList = document.getElementById('productList');
                 var li = document.createElement('li');
                 li.setAttribute('data-product-id', addedProduct);
                 li.textContent = `${qte_dValue} Piece(s) de ${productName}`;
+
                 productList.appendChild(li);
+
             }
         });
-        document.getElementById('agent').addEventListener('change', function() {
-            updateAgentName();
-        });
-        function updateAgentName() {
-            var agentSelect = document.getElementById('agent');
-            var selectedAgent = agentSelect.options[agentSelect.selectedIndex].text;
-            document.getElementById('agentName').innerText = selectedAgent;
-        }
     </script>
+
+
     <script>
         document.getElementById('printPageButton').addEventListener('click', function() {
             var currentDate = new Date();
+            // Format the date as desired (e.g., YYYY-MM-DD)
             var formattedDate = currentDate.toISOString().slice(0, 10);
+            // Set the options for html2pdf
             var options = {
                 filename: 'demande_decharge_' + formattedDate + '.pdf',
                 image: {
@@ -436,10 +495,15 @@
                     orientation: 'portrait'
                 }
             };
+
+            // Set the content to be added to the PDF
             var content = document.getElementById('content');
+
+            // Generate the PDF
             html2pdf().from(content).set(options).save();
         });
     </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     </div>
 @endsection

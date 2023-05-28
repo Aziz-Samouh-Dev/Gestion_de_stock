@@ -1,12 +1,7 @@
 @extends('/layout.layout')
-
-
 @section('title', 'produits')
-
 @section('content')
-
     <div class="border-2 rounded-lg shadow-lg bg-white">
-
         <div class="relative  shadow-md  p-3  ">
             <div class=" px-4 ">
                 <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">List Produits</h1>

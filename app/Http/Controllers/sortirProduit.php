@@ -2,44 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
+use App\Models\Agent;
 use App\Models\Produit;
+use App\Models\Service;
+use App\Models\Division;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class sortirProduit extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-
-        $produits = Produit::all();
+        $divisions = Division::all();
         $services = Service::all();
-        return view('layout.SortieProoduit.sortirProduit', compact('services', 'produits'));
+        $agents = Agent::all();
+        $produits = Produit::all();
+
+        return view('layout.SortieProoduit.sortirProduit', compact('divisions', 'services', 'agents', 'produits'));
     }
 
+    public function getServices(Request $request)
+    {
+        $divisionId = $request->input('division_id');
+        $services = Service::join('division_service', 'services.id_service', '=', 'division_service.id_service')
+        ->where('division_service.id_division', $divisionId)
+            ->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
+        return response()->json($services);
+    }
+
     public function getAgents(Request $request)
     {
-        $serviceId = "";
-        if ($request->has('service_id')) {
-            $serviceId = $request->input('service_id');
-        }
-        $agents = DB::table("services")->where("services.id_service", $serviceId)
-            ->join("agent_service", "agent_service.id_service", "services.id_service")
-            ->join("agents", "agents.id_agent", "agent_service.id_agent")
-            ->select("agents.nom_agent", "agents.prenom_agent", "agents.id_agent")
+        $serviceId = $request->input('service_id');
+
+        $agents = DB::table('agents')
+        ->join('agent_service', 'agents.id_agent', '=', 'agent_service.id_agent')
+        ->where('agent_service.id_service', $serviceId)
+            ->select('agents.id_agent', 'agents.nom_agent')
             ->get();
+
         return response()->json($agents);
     }
+
+    public function getProducts(Request $request)
+    {
+        $agentId = $request->input('agent_id');
+
+        // Retrieve products based on the agent ID
+        $products = Produit::where('agent_id', $agentId)->get();
+
+        // Return JSON response
+        return response()->json($products);
+    }
+
+
     public function create()
     {
+        // 
     }
     /**
      * Store a newly created resource in storage.

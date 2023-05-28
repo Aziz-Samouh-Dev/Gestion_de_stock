@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\sortirProduit;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\etat_de_stockController;
 
 /*
@@ -35,18 +37,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/produits', ProduitController::class);
 
     Route::resource('/agents', AgentController::class);
+    Route::resource('/divisions', DivisionController::class);
 
     Route::resource('/services', ServiceController::class);
     Route::patch('/services/{id}', [ServiceController::class, 'update'])->name('services.update');
 
 
-    Route::resource('/sortiProduit', sortirProduit::class);
-    Route::get('/getAgents', [sortirProduit::class, "getAgents"]);
+    Route::resource('/sortiProduit', sortirProduit::class);;
+    Route::get('/getAgents', [sortirProduit::class, 'getAgents'])->name('getAgents');
+    Route::get('/getServices', [sortirProduit::class, 'getServices'])->name('getServices');
+    Route::get('/getProducts', [sortirProduit::class, 'getProducts'])->name('getProducts');
+
+
     Route::post('/updateProduct', [sortirProduit::class, 'update']);
 
     Route::resource('/etatS', etat_de_stockController::class);
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
 });
