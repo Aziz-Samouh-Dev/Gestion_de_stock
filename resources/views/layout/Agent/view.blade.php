@@ -11,13 +11,26 @@
                         <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Informations sur l'agent</h1>
                     </div>
                     <div class="p-6 bg-white border border-gray-200 rounded-lg shadowdark:bg-gray-800 ">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Nom : {{ $agents->nom_agent }}
-                        </h5>
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Prenom :
-                            {{ $agents->prenom_agent }} </h5>
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Grade :
-                            {{ $agents->grade_agent }} </h5>
+                        <dl class="max-w-md text-gray-900 divide-y divide-gray-200 ">
+                            <div class="flex flex-col pb-3">
+                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Nom</dt>
+                                <dd class="text-lg font-semibold">{{ $agents->nom_agent }}</dd>
+                            </div>
+                            <div class="flex flex-col py-3">
+                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Prenom</dt>
+                                <dd class="text-lg font-semibold">{{ $agents->prenom_agent }}</dd>
+                            </div>
+                            <div class="flex flex-col pt-3">
+                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Grade</dt>
+                                <dd class="text-lg font-semibold">{{ $agents->grade_agent }}</dd>
+                            </div>
+                        </dl>
                     </div>
+
+
+
+
+
                     <div class="px-6 py-3 flex justify-end">
                         <a href=" {{ url('/agents/' . $agents->id_agent . '/edit') }} " title="View Agent">
                             <button type="button"
@@ -28,7 +41,7 @@
                                         d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                 </svg>
                                 <span class="p-2 ">
-                                    Edite
+                                    Modifier
                                 </span>
 
                             </button>

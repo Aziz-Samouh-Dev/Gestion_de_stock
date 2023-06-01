@@ -4,7 +4,7 @@
     <div class="border-2 rounded-lg shadow-lg bg-white">
         <div class="relative  shadow-md  p-3  ">
             <div class=" px-4 ">
-                <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">List Produits</h1>
+                <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Liste Produits</h1>
             </div>
             <div class="w-full flex items-center justify-between p-3 mb-5">
                 <form action="#" method="get">

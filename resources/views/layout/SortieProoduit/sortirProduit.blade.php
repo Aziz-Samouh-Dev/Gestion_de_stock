@@ -6,7 +6,7 @@
             <div class="relative overflow-x-auto  p-3 grid   ">
 
                 <div class=" px-4 mb-4">
-                    <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Sortir Produit</h1>
+                    <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Sortie Produit</h1>
                 </div>
                 <div class=" flex flex-wrap">
                     <div class="w-full px-3 grid grid-cols-3 gap-4 ">
@@ -182,8 +182,9 @@
                             </h1>
                         </div>
                         <div class="p-6 bg-white  shadowdark:bg-gray-800 ">
-                            <p class="mb-2"><span class="font-bold pr-2">Division </span> <span class="font-bold pr-2"> :
-                            </span><span id="divisionName"></span></p>
+                            <p class="mb-2"><span class="font-bold pr-2">Division </span> <span class="font-bold pr-2">
+                                    :
+                                </span><span id="divisionName"></span></p>
                             <p class="mb-2"><span class="font-bold pr-2">SERVICE </span><span class="font-bold pr-2"> :
                                 </span> <span id="serviceName"></span>
                             </p>
@@ -227,7 +228,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#division').prepend($('<option></option>').attr('selected', 'selected').text('Select...').addClass('hidden'));
+            $('#division').prepend($('<option></option>').attr('selected', 'selected').text('Select...').addClass(
+                'hidden'));
             $('#division').on('change', function() {
                 var divisionId = $(this).val();
                 if (divisionId !== '') {
@@ -283,18 +285,23 @@
                 var serviceName = this.selectedOptions[0].text;
                 document.getElementById('serviceName').innerText = serviceName;
             });
+
+
             function showAlert(message) {
                 $('#alertMessage').text(message);
                 $('#alertContainer').show();
-            }
+            };
+
         });
     </script>
     <script>
-        var addedProducts = []; 
-        var addedQts = []; 
+        var addedProducts = [];
+        var addedQts = [];
+
         function isProductAdded(productId) {
             return addedProducts.includes(productId);
         }
+
         function addProduct(productId) {
             if (isProductAdded(productId)) {
                 console.log('Product is already added');
@@ -334,8 +341,15 @@
                     addedProducts.push(productId);
                 }
             });
+        });
+
+        $('#dropdownActionButton').on('click', function(event) {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             var isAnyCheckboxChecked = checkboxes.length > 0;
-            if (!isAnyCheckboxChecked) {
+
+            var agentSelected = $('#agent').val();
+
+            if (!isAnyCheckboxChecked || !agentSelected ) {
                 event.preventDefault();
                 alert("Vous devez remplir les informations.");
                 document.getElementById('tableView').style.display = 'none';
@@ -363,7 +377,7 @@
                     alert('La Quantité demendé dépasse la quantité disponible.');
                     document.getElementById('alertContainer').style.display = 'none';
                     document.getElementById('tableView').style.display = 'block';
-                    return; 
+                    return;
                 }
                 if (parseInt(qte_dValue) === 0) {
                     alert("la case QTE demendé n'est pas accepter la valeur 0");
@@ -385,8 +399,7 @@
                 });
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                        } else {
+                        if (xhr.status === 200) {} else {
                             alert('Failed to update product');
                         }
                     }
@@ -411,6 +424,7 @@
         document.getElementById('agent').addEventListener('change', function() {
             updateAgentName();
         });
+
         function updateAgentName() {
             var agentSelect = document.getElementById('agent');
             var selectedAgent = agentSelect.options[agentSelect.selectedIndex].text;

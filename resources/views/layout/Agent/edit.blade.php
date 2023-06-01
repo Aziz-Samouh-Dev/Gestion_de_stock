@@ -8,7 +8,7 @@
             <div class="flex items-center justify-center mb-5 ">
                 <div class=" w-full p-3 ">
                     <div class=" px-4 ">
-                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Edite Produit</h1>
+                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Modifier Produit</h1>
                     </div>
 
 
@@ -56,7 +56,7 @@
                         <div class="flex items-center justify-center pt-5">
                             <button type="submit"
                                 class=" hover:shadow-form inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 ">
-                                Submite
+                                Envoyer
                             </button>
                         </div>
                     </form>

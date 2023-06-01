@@ -35,7 +35,7 @@
                                         <input id="{{ $item->id_agent }}" type="checkbox" name="id_agent[]"
                                             value="{{ $item->id_agent }}"
                                             class="defaultCheckbox relative flex h-[20px] min-h-[20px] w-[20px] min-w-[20px] appearance-none items-center justify-center rounded-md border border-gray-300 text-white/0 outline-none transition duration-[0.2s] checked:text-white hover:cursor-pointer checked:bg-green-600 " />
-                                        <label for="{{ $item->id_agent }}" 
+                                        <label for="{{ $item->id_agent }}"
                                             class="w-full ml-2 text-sm font-medium text-gray-400 rounded ">
                                             {{ $item->nom_agent }} {{ $item->prenom_agent }}
                                         </label>
@@ -46,7 +46,7 @@
                         <div class="flex items-center justify-center pt-5">
                             <button type="submit"
                                 class=" hover:shadow-form inline-flex items-center text-gray-100 bg-green-700 focus:ring-4 font-medium rounded-lg text-sm py-3 px-8 ">
-                                Submite
+                                Envoyer
                             </button>
                         </div>
                     </form>

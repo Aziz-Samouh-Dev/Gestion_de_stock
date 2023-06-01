@@ -16,10 +16,11 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::orderBy('id_service', 'desc')->with('agents')->get()->groupBy('id_service');
+        
+        $services = Service::with('agents')->orderBy('id_service', 'desc')->with('agents')->get()->groupBy('id_service');
 
 
-        return view('layout.Service.services', compact('services'));
+        return view('layout.Service.services', compact('services' ));
     }
 
 
