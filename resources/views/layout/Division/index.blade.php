@@ -18,7 +18,7 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <input type="text" id="searchInput" placeholder="Rechercher Service"
+                            <input type="text" id="searchInput" placeholder="Rechercher Division"
                                 class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-64 focus:ring-blue-500 focus:border-blue-500 outline-none ">
                         </div>
                         <div>
@@ -31,16 +31,15 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <span class="px-2">Ajouter divisions</span> </button>
+                                    <span class="px-2">Ajouter division</span> 
+                                </button>
                             </a>
                         </div>
                     </div>
-
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                         <table id="my-table" class="w-full text-sm text-left text-gray-500 border  bg-dark ">
                             <thead class="text-xs text-gray-100 uppercase bg-gray-500 px-4 ">
                                 <tr>
-
                                     <th scope="col" class="px-6 py-3">
                                         Nom Division
                                     </th>
@@ -124,36 +123,21 @@
                             </tbody>
                         </table>
                     </div>
-
-
-
                 </div>
-
-
                 <script>
-                    // Get the search input element
                     var searchInput = document.getElementById("searchInput");
-
-                    // Add event listener to the search input
                     searchInput.addEventListener("keyup", function() {
-                        // Get the search value and convert it to lowercase
                         var searchValue = this.value.toLowerCase();
 
-                        // Get all table rows in the tbody
                         var rows = document.querySelectorAll("#my-table tbody tr");
                         var rows = document.querySelectorAll("#my-table tbody tr");
 
-                        // Loop through each row and hide/show based on search value
                         rows.forEach(function(row) {
-                            // Get the text content of each cell in the row
                             var rowData = row.textContent.toLowerCase();
 
-                            // Check if the search value is found in the row data
                             if (rowData.includes(searchValue)) {
-                                // Show the row if the search value is found
                                 row.style.display = "";
                             } else {
-                                // Hide the row if the search value is not found
                                 row.style.display = "none";
                             }
                         });

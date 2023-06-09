@@ -6,7 +6,7 @@
             <div class="flex items-center justify-center mb-5 ">
                 <div class=" w-full p-3 ">
                     <div class=" px-4 ">
-                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Ajouter Service</h1>
+                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Ajouter division</h1>
                     </div>
                     <form action="{{ route('divisions.store') }}" method="post">
                         @csrf

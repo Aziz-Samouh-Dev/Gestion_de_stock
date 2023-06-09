@@ -1,12 +1,12 @@
 @extends('/layout.layout')
-@section('title', 'Edit Division')
+@section('title', 'Modifier Division')
 @section('content')
     <div class="border-2 rounded-lg shadow-lg bg-white">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-3">
             <div class="flex items-center justify-center mb-5 ">
                 <div class=" w-full p-3 ">
                     <div class=" px-4 ">
-                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Edit Division</h1>
+                        <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Modifier Division</h1>
                     </div>
                     <form action="{{ route('divisions.update', $division->id_division) }}" method="post">
                         @csrf

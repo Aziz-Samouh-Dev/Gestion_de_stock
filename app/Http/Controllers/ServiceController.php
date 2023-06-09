@@ -19,7 +19,6 @@ class ServiceController extends Controller
         
         $services = Service::with('agents')->orderBy('id_service', 'desc')->with('agents')->get()->groupBy('id_service');
 
-
         return view('layout.Service.services', compact('services' ));
     }
 
@@ -34,19 +33,16 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the form data
         $validatedData = $request->validate([
             'nom_service' => 'required|string|max:255',
             'id_agent' => 'required|array',
         ]);
 
-        // Create a new service
         $service = new Service();
         $created_service = $service->create([
             "nom_service" => $validatedData['nom_service'],
         ]);
 
-        // Attach the selected agents to the service
         foreach ($validatedData['id_agent'] as $item) {
             $agent_service = new AgentService();
             $created_service = $agent_service->create([
@@ -56,7 +52,6 @@ class ServiceController extends Controller
         }
         return redirect()->route('services.index')->with('success', 'Service created successfully.');
 
-        // Redirect back to the form with a success message
     }
 
 
@@ -89,21 +84,17 @@ class ServiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validate the form data
         $validatedData = $request->validate([
             'nom_service' => 'required|string|max:255',
             'id_agent' => 'required|array',
         ]);
 
-        // Find the service by its ID
         $service = Service::findOrFail($id);
 
-        // Update the service details
         $service->update([
             'nom_service' => $validatedData['nom_service'],
         ]);
 
-        // Sync the selected agents for the service
         $service->agents()->sync($validatedData['id_agent']);
 
         return redirect()->route('services.index')->with('success', 'Service updated successfully.');

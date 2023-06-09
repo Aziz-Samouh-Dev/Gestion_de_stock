@@ -1,10 +1,10 @@
 @extends('layout.layout')
-@section('title', 'services')
+@section('title', 'Services')
 @section('content')
     <div class="border-2 rounded-lg shadow-lg bg-white">
         <div class="relative overflow-x-auto shadow-md p-3 ">
             <div class=" px-4 ">
-                <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Lists Services </h1>
+                <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600 ">Liste Services </h1>
             </div>
             <div class="w-full flex items-center justify-between p-3 mb-5">
                 <div class="relative ">
@@ -29,31 +29,27 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span class="px-2">Ajouter Service</span> </button>
+                            <span class="px-2">Ajouter Service</span>
+                        </button>
                     </a>
                 </div>
             </div>
-
-
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-5">
                 <table id="my-table" class="w-full text-sm text-left text-gray-500 border  bg-dark ">
                     <thead class="text-xs text-gray-100 uppercase bg-gray-500 px-4 ">
                         <tr>
-
                             <th scope="col" class="px-6 py-3">
                                 Nom Service
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Agents
                             </th>
-
                             <th scope="col" class="px-6 py-3">
                                 action
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @foreach ($services as $serviceGroup)
                             @foreach ($serviceGroup as $service)
                                 <tr class="bg-white border-b ">
@@ -62,10 +58,7 @@
                                             {{ $service->nom_service }}
                                         </div>
                                     </th>
-
                                     <td class="px-6 py-4">
-
-
                                         <button id="dropdownDefaultButton"
                                             data-dropdown-toggle="dropdown{{ $service->id_service }}"
                                             class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center "
@@ -74,26 +67,23 @@
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M19 9l-7 7-7-7"></path>
-                                            </svg></button>
-
+                                            </svg>
+                                        </button>
                                         <div id="dropdown{{ $service->id_service }}"
                                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                                 aria-labelledby="dropdownDefaultButton">
-
                                                 @foreach ($service->agents as $agent)
                                                     <li>
                                                         <a href="#"
-                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $agent->nom_agent }}
-                                                            {{ $agent->prenom_agent }}</a>
+                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                            {{ $agent->nom_agent }} {{ $agent->prenom_agent }}
+                                                        </a>
                                                     </li>
                                                 @endforeach
-
                                             </ul>
                                         </div>
-
                                     </td>
-
                                     <td class="px-6 py-3 flex items-center ">
                                         <a href=" {{ url('/services/' . $service->id_service) }} " title="View service">
                                             <button type="button"
@@ -117,7 +107,6 @@
                                                         d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                 </svg>
                                             </button>
-
                                         </a>
                                         <form method="post" action=" {{ url('/services/' . $service->id_service) }}">
                                             @csrf
@@ -136,48 +125,30 @@
                                 </tr>
                             @endforeach
                         @endforeach
-
-
-
-
-
                     </tbody>
                 </table>
             </div>
-
-
-
         </div>
-    </div>
+        <script>
+            var searchInput = document.getElementById("searchInput");
 
-    <script>
-        // Get the search input element
-        var searchInput = document.getElementById("searchInput");
+            searchInput.addEventListener("keyup", function() {
+                var searchValue = this.value.toLowerCase();
 
-        // Add event listener to the search input
-        searchInput.addEventListener("keyup", function() {
-            // Get the search value and convert it to lowercase
-            var searchValue = this.value.toLowerCase();
+                var rows = document.querySelectorAll("#my-table tbody tr");
+                var rows = document.querySelectorAll("#my-table tbody tr");
 
-            // Get all table rows in the tbody
-            var rows = document.querySelectorAll("#my-table tbody tr");
-            var rows = document.querySelectorAll("#my-table tbody tr");
+                rows.forEach(function(row) {
+                    var rowData = row.textContent.toLowerCase();
 
-            // Loop through each row and hide/show based on search value
-            rows.forEach(function(row) {
-                // Get the text content of each cell in the row
-                var rowData = row.textContent.toLowerCase();
-
-                // Check if the search value is found in the row data
-                if (rowData.includes(searchValue)) {
-                    // Show the row if the search value is found
-                    row.style.display = "";
-                } else {
-                    // Hide the row if the search value is not found
-                    row.style.display = "none";
-                }
+                    if (rowData.includes(searchValue)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
             });
-        });
-    </script>
+        </script>
+    </div>
 
 @endsection

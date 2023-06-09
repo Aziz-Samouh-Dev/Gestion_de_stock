@@ -1,7 +1,5 @@
 @extends('/layout.layout')
-
-@section('title', 'Ajouter produit')
-
+@section('title', "Informations sur l'agent")
 @section('content')
     <div class="border-2 rounded-lg shadow-lg bg-white">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-3">
@@ -26,11 +24,6 @@
                             </div>
                         </dl>
                     </div>
-
-
-
-
-
                     <div class="px-6 py-3 flex justify-end">
                         <a href=" {{ url('/agents/' . $agents->id_agent . '/edit') }} " title="View Agent">
                             <button type="button"
@@ -43,7 +36,6 @@
                                 <span class="p-2 ">
                                     Modifier
                                 </span>
-
                             </button>
                         </a>
                         <form method="post" action=" {{ url('/agents/' . $agents->id_agent) }} ">
@@ -60,7 +52,6 @@
                                 <span class="p-2 ">
                                     Delete
                                 </span>
-
                         </form>
                         <a href="{{ url('agents') }}">
                             <button type="button"
@@ -76,11 +67,8 @@
                             </button>
                         </a>
                     </div>
-
-
                 </div>
             </div>
-
         </div>
     </div>
 @endsection

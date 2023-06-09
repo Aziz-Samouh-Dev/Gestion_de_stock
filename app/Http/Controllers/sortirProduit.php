@@ -53,37 +53,9 @@ class sortirProduit extends Controller
     {
         $agentId = $request->input('agent_id');
 
-        // Retrieve products based on the agent ID
         $products = Produit::where('agent_id', $agentId)->get();
-
-        // Return JSON response
         return response()->json($products);
     }
-
-
-    public function create()
-    {
-        // 
-    }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
 
 
     /**
@@ -97,12 +69,4 @@ class sortirProduit extends Controller
         return redirect('produits')->with('flash_message', 'Produit à été modifier!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

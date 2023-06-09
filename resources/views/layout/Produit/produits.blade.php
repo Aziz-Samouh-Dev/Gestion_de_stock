@@ -33,7 +33,6 @@
                                     d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <span class="px-2">Ajouter produit</span>
-
                         </button>
                     </a>
                 </div>
@@ -66,8 +65,6 @@
                         </tr>
                     </thead>
                     <tbody id="Content">
-
-
                         @foreach ($produits as $item)
                             <tr class="bg-white border-b">
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap ">
@@ -84,7 +81,6 @@
                                 <td class="px-4 py-3">
                                     {{ $item->qte_p }}
                                 </td>
-
                                 @if ($item->qte_p === 0)
                                     <td class="flex px-4 py-3 text-red-700">
                                         <h5 class="px-3 py-2 bg-red-600 text-white rounded-full ">
@@ -130,13 +126,11 @@
                                                     d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                             </svg>
                                         </button>
-
                                     </a>
                                     <form method="post" action=" {{ url('/produits/' . $item->id_produit) }} ">
                                         @csrf
                                         {{ method_field('DELETE') }}
-                                        <button type="submit" title="Delete P"
-                                            onclick=" return confirm('confirm delete ? ') " type="button"
+                                        <button type="submit" title="Delete P" onclick=" return confirm('confirm delete ? ') " type="button"
                                             class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-1 focus:outline-none focus:ring-red-500 font-medium rounded-lg text-sm px-1.5 py-1 text-center   dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -147,41 +141,22 @@
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
                 {{ $produits->links() }}
             </div>
-
-
         </div>
     </div>
-
-
-    <!-- Script to filter table rows based on search input -->
     <script>
-        // Get the search input element
         var searchInput = document.getElementById("searchInput");
-
-        // Add event listener to the search input
         searchInput.addEventListener("keyup", function() {
-            // Get the search value and convert it to lowercase
             var searchValue = this.value.toLowerCase();
-
-            // Get all table rows in the tbody
             var rows = document.querySelectorAll("#my-table tbody tr");
-
-            // Loop through each row and hide/show based on search value
             rows.forEach(function(row) {
-                // Get the text content of each cell in the row
                 var rowData = row.textContent.toLowerCase();
-
-                // Check if the search value is found in the row data
                 if (rowData.includes(searchValue)) {
-                    // Show the row if the search value is found
                     row.style.display = "";
                 } else {
-                    // Hide the row if the search value is not found
                     row.style.display = "none";
                 }
             });

@@ -35,8 +35,7 @@ class AgentController extends Controller
     public function create()
     {
         //
-        $agents = Agent::all();
-        return view('layout.Agent.ajouteAgent', compact('agents'));
+        return view('layout.Agent.ajouteAgent');
     }
 
     /**

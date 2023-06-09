@@ -1,7 +1,5 @@
 @extends('/layout.layout')
-
-@section('title', 'Ajouter produit')
-
+@section('title', 'Ajouter Agent')
 @section('content')
     <div class="border-2 rounded-lg shadow-lg bg-white">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-3">
@@ -11,9 +9,7 @@
                         <h1 class="text-2xl font-bold antialiased pb-3 pt-6 text-green-600">Ajouter Agent</h1>
                     </div>
                     <form action="{{ url('agents') }}" method="post">
-
                         @csrf
-
                         <div class="-mx-3 flex flex-wrap">
                             <div class="w-full px-3 ">
                                 <div class="mb-5">

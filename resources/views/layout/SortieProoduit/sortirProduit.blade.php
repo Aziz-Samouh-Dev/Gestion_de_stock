@@ -343,25 +343,23 @@
             });
         });
 
-        $('#dropdownActionButton').on('click', function(event) {
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            var isAnyCheckboxChecked = checkboxes.length > 0;
-
-            var agentSelected = $('#agent').val();
-
-            if (!isAnyCheckboxChecked || !agentSelected ) {
-                event.preventDefault();
-                alert("Vous devez remplir les informations.");
-                document.getElementById('tableView').style.display = 'none';
-                document.querySelector('.pageini').style.display = 'block';
-            } else {
-                document.getElementById('tableView').style.display = 'block';
-                document.querySelector('.pageini').style.display = 'none';
-            }
-        });
         document.getElementById('valider').addEventListener('click', function() {
+            var addedProductIds = []; // Array to store the added product IDs
+
+            // Remove old product list before adding new products
+            var productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
             for (var i = 0; i < addedProducts.length; i++) {
                 var addedProduct = addedProducts[i];
+
+                // Skip if the product is already added
+                if (addedProductIds.includes(addedProduct)) {
+                    continue;
+                }
+
+                addedProductIds.push(addedProduct); // Add the product ID to the addedProductIds array
+
                 var xhr = new XMLHttpRequest();
                 var qte_dInputs = document.querySelectorAll('input[id="qte_d"]');
                 var qte_dValue;
@@ -374,18 +372,19 @@
                 console.log(qte_dValue);
                 var maxQuantity = parseInt(qte_dInputs[j].getAttribute('max'));
                 if (parseInt(qte_dValue) > maxQuantity) {
-                    alert('La Quantité demendé dépasse la quantité disponible.');
+                    alert('La Quantité demandée dépasse la quantité disponible.');
                     document.getElementById('alertContainer').style.display = 'none';
                     document.getElementById('tableView').style.display = 'block';
                     return;
                 }
                 if (parseInt(qte_dValue) === 0) {
-                    alert("la case QTE demendé n'est pas accepter la valeur 0");
+                    alert("La case QTE demandée n'accepte pas la valeur 0");
                     document.getElementById('alertContainer').style.display = 'none';
                     document.getElementById('tableView').style.display = 'block';
+                    continue; // Skip the product and proceed to the next iteration
                 }
                 if (qte_dValue === '') {
-                    alert('vous devez remplire la case QTE demendé ');
+                    alert('Vous devez remplir la case QTE demandée.');
                     document.getElementById('alertContainer').style.display = 'none';
                     document.getElementById('tableView').style.display = 'block';
                     return;
@@ -399,7 +398,9 @@
                 });
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {} else {
+                        if (xhr.status === 200) {
+                            // Success: Handle the response if needed
+                        } else {
                             alert('Failed to update product');
                         }
                     }
@@ -414,13 +415,13 @@
                         return;
                     }
                 });
-                var productList = document.getElementById('productList');
                 var li = document.createElement('li');
                 li.setAttribute('data-product-id', addedProduct);
                 li.textContent = `${qte_dValue} Piece(s) de ${productName}`;
                 productList.appendChild(li);
             }
         });
+
         document.getElementById('agent').addEventListener('change', function() {
             updateAgentName();
         });
