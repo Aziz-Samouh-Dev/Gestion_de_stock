@@ -15,9 +15,9 @@
     <div class="bg-white dar:bg-gray-50">
         <div class="flex justify-center h-screen">
             <div class="hidden md:block md:w-2/4"
-                style="background: linear-gradient(180deg, #2EA154 0%, #54B435 68.75%)">
+                style="background: #F1F4FF">
                 <div class="flex items-center justify-center w-full h-screen p-8">
-                    <img src="images/bigLogo.png" alt="Modern building architecture">
+                    <img src="images/2.png" alt="Modern building architecture">
                 </div>
             </div>
             <div class="flex items-center w-full h-screen max-w-md px-6 mx-auto md:w-2/4">
